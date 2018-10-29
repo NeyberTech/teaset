@@ -11,6 +11,8 @@ import ThemeViolet from './ThemeViolet';
 // See https://mydevice.io/devices/ for device dimensions
 const X_WIDTH = 375;
 const X_HEIGHT = 812;
+const XR_WIDTH = 414;
+const XR_HEIGHT = 896;
 const PAD_WIDTH = 768;
 const PAD_HEIGHT = 1024;
 const {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
@@ -22,13 +24,15 @@ const isPad = D_WIDTH >= PAD_WIDTH && D_HEIGHT >= PAD_WIDTH;
 
 const isIPhoneX = (() => {
   if (Platform.OS === 'web') return false;
-  if (minor >= 50) {
-    return DeviceInfo.isIPhoneX_deprecated;
-  }
+//   if (minor >= 50) {
+//     return DeviceInfo.isIPhoneX_deprecated;
+//   }
   return (
-    Platform.OS === 'ios'
-      && ( (D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH)
-        || (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT))
+    Platform.OS === 'ios' &&
+    ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
+      (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT)) ||
+    ((D_HEIGHT === XR_HEIGHT && D_WIDTH === XR_WIDTH) ||
+        (D_HEIGHT === XR_WIDTH && D_WIDTH === XR_HEIGHT))
   );
 })();
 
