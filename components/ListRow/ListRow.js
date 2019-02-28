@@ -18,7 +18,7 @@ export default class ListRow extends Component {
     title: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
     detail: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
     titleStyle: Text.propTypes.style,
-    titleMultiLine: Text.propTypes.style,
+    titleMultiLine: Text.propTypes.bool,
     detailStyle: Text.propTypes.style,
     detailMultiLine: PropTypes.bool, //是否支持多行内容
     icon: PropTypes.oneOfType([PropTypes.element, PropTypes.shape({uri: PropTypes.string}), PropTypes.number]),
