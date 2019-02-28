@@ -18,6 +18,7 @@ export default class ListRow extends Component {
     title: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
     detail: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
     titleStyle: Text.propTypes.style,
+    titleMultiLine: PropTypes.bool,
     detailStyle: Text.propTypes.style,
     detailMultiLine: PropTypes.bool, //是否支持多行内容
     icon: PropTypes.oneOfType([PropTypes.element, PropTypes.shape({uri: PropTypes.string}), PropTypes.number]),
@@ -35,6 +36,7 @@ export default class ListRow extends Component {
     topSeparator: 'none',
     bottomSeparator: 'indent',
     titlePlace: 'left',
+    titleMultiLine: false
   };
 
   static SwipeActionButton = SwipeActionButton;
@@ -60,7 +62,7 @@ export default class ListRow extends Component {
   }
 
   buildProps() {
-    let {style, activeOpacity, onPress, title, detail, titleStyle, detailStyle, detailMultiLine, icon, accessory, topSeparator, bottomSeparator, titlePlace, contentStyle, ...others} = this.props;
+    let {style, activeOpacity, onPress, title, detail, titleStyle, titleMultiLine, detailStyle, detailMultiLine, icon, accessory, topSeparator, bottomSeparator, titlePlace, contentStyle, ...others} = this.props;
 
     //style
     style = [{
@@ -93,7 +95,7 @@ export default class ListRow extends Component {
     }
     if (typeof title === 'string' || typeof title === 'number') {
       let textStyle = (!detail && titlePlace === 'left') ? {flexGrow: 1, flexShrink: 1} : null;
-      title = <Label style={[textStyle, titleStyle]} type='title' text={title} />
+      title = <Label style={[textStyle, titleStyle]} type='title' text={title} numberOfLines={titleMultiLine ? 0 : 1} />
     }
 
     //detail
@@ -189,7 +191,7 @@ export default class ListRow extends Component {
         break;        
     }
 
-    this.props = {style, activeOpacity, onPress, title, detail, titleStyle, detailStyle, detailMultiLine, icon, accessory, topSeparator, bottomSeparator, titlePlace, contentStyle, ...others};
+    this.props = {style, activeOpacity, onPress, title, detail, titleStyle, titleMultiLine, detailStyle, detailMultiLine, icon, accessory, topSeparator, bottomSeparator, titlePlace, contentStyle, ...others};
   }
 
   renderSwipeActionView() {
