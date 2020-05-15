@@ -61,10 +61,12 @@ export default class Label extends Component {
     }].concat(style);
 
     redDotStyle=[{
-      height: 8,
-      width: 8,
-      borderRadius: 4,
+      height: 6,
+      width: 6,
+      borderRadius: 3,
       backgroundColor: '#F44336',
+      borderColor: '#fff',
+      borderWidth: 0.5,
       position: 'absolute',
       right: -4,
       top: 0,
