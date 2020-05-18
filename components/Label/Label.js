@@ -27,7 +27,7 @@ export default class Label extends Component {
   };
 
   buildProps() {
-    let {type, size, style, text, children, withRedDot, redDotStyle, ...others} = this.props;
+    let {type, size, style, text, children, withRedDot, redDotContainerStyle, redDotStyle, ...others} = this.props;
 
     let color, fontSize;
     switch (size) {
@@ -60,21 +60,27 @@ export default class Label extends Component {
       overflow: 'hidden',
     }].concat(style);
 
-    redDotStyle=[{
+    redDotContainerStyle=[{
       height: 6,
       width: 6,
-      borderRadius: 3,
-      backgroundColor: '#F44336',
-      borderColor: '#fff',
-      borderWidth: 0.5,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
       position: 'absolute',
       right: -4,
       top: 0,
+    }].concat(redDotContainerStyle)
+
+    redDotStyle=[{
+      height: 5,
+      width: 5,
+      borderRadius: 2.5,
+      backgroundColor: '#F44336',
     }].concat(redDotStyle)
 
     if (text || text === '' || text === 0) children = text;
 
-    return {type, size, style, text, children, withRedDot, redDotStyle, ...others};
+    return {type, size, style, text, children, withRedDot, redDotContainerStyle, redDotStyle, ...others};
   }
 
   render() {
@@ -83,7 +89,9 @@ export default class Label extends Component {
       props.withRedDot ?
       <View>
         <Text {...props} style={[props.style,{alignSelf:'center',flexGrow:0,flexShrink:0}]}/>
-        <View style={props.redDotStyle}></View>
+        <View style={props.redDotContainerStyle}>
+          <View style={props.redDotStyle} />
+        </View>
       </View> :
       <Text {...props} />
     );
