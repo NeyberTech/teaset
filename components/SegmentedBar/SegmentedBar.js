@@ -229,7 +229,7 @@ export default class SegmentedBar extends Component {
   }
 
   renderFixed() {
-    let {style, justifyItem, indicatorType, indicatorPosition, indicatorLineColor, indicatorPositionPadding, animated, activeIndex, onChange, children, ...others} = this.props;
+    let {style, justifyItem, indicatorType, indicatorPosition, indicatorLineColor, indicatorPositionPadding, indicatorStyle, animated, activeIndex, onChange, children, ...others} = this.props;
     style = [{
       backgroundColor: Theme.sbColor,
       flexDirection: 'row',
@@ -257,7 +257,7 @@ export default class SegmentedBar extends Component {
   }
 
   renderScrollable() {
-    let {style, justifyItem, indicatorType, indicatorPosition, indicatorLineColor, indicatorPositionPadding, animated, activeIndex, onChange, onLayout, children, ...others} = this.props;
+    let {style, justifyItem, indicatorType, indicatorPosition, indicatorLineColor, indicatorPositionPadding, indicatorStyle, animated, activeIndex, onChange, onLayout, children, ...others} = this.props;
     style = [{
       backgroundColor: Theme.sbColor,
     }].concat(style);
