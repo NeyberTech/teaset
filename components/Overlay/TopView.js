@@ -33,6 +33,11 @@ export default class TopView extends Component {
   static restore(animated, animatesOnly = null) {
     DeviceEventEmitter.emit("restoreRoot", {animated, animatesOnly});
   }
+  
+  static emitUnderViewMove() {
+    const args = [].slice.call(arguments, 0);
+    DeviceEventEmitter.emit("underViewMove", ...args);
+  }
 
   constructor(props) {
     super(props);
@@ -239,7 +244,7 @@ var styles = StyleSheet.create({
 class PureView extends PureComponent {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1}} onTouchMove={TopView.emitUnderViewMove}>
         {this.props.children}
       </View>
     );
