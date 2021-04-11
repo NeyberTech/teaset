@@ -3,7 +3,7 @@
 'use strict';
 
 import React, {Component} from "react";
-import {View} from 'react-native';
+import {View， DeviceEventEmitter} from 'react-native';
 
 import TopView from './TopView';
 import OverlayView from './OverlayView';
@@ -24,7 +24,7 @@ export default class Overlay {
   //   animated: PropTypes.bool,
   //   overlayOpacity: PropTypes.number,
   //   overlayPointerEvents: ViewPropTypes.pointerEvents,
-  static show(overlayView) {
+  static show(overlayView, options = {}) {
     let key;
     let onDisappearCompletedSave = overlayView.props.onDisappearCompleted;
     let element = React.cloneElement(overlayView, {
@@ -34,6 +34,23 @@ export default class Overlay {
       }
     });
     key = TopView.add(element);
+
+    let { hideWhenUnderViewMove } = options;
+    if (hideWhenUnderViewMove) {
+      let moveListener = DeviceEventEmitter.addListener('underViewMove',function(){
+        Overlay.hide(key);
+        moveListener.remove();
+        closeListener.remove();
+      });
+      let closeListener = DeviceEventEmitter.addListener('removeOverlay',function({key: _key} = {}){
+        if (key === _key) {
+          moveListener.remove();
+          closeListener.remove();
+        }
+      });
+
+    }    
+    
     return key;
   }
 
