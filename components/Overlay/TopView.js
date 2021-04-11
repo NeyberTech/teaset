@@ -244,7 +244,7 @@ var styles = StyleSheet.create({
 class PureView extends PureComponent {
   render() {
     return (
-      <View style={{flex: 1}} onTouchMove={TopView.emitUnderViewMove}>
+      <View style={{flex: 1}} onTouchMove={TopView.emitUnderViewMove} onTouchEnd={TopView.emitUnderViewMove}>
         {this.props.children}
       </View>
     );
