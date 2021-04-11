@@ -56,13 +56,16 @@ export default class SegmentedBar extends Component {
       this._itemsLayout = nextItemsLayout;
       this._itemsAddWidth = this.makeArray(this._itemsAddWidth, this.props.children, 0);
     }
+    const changed = this.props.activeIndex !== this._activeIndex;
     if (this.props.activeIndex || this.props.activeIndex === 0) {
       this._activeIndex = this.props.activeIndex;
     }
     if (this._activeIndex >= nextItemsLayout.length) {
       this._activeIndex = nextItemsLayout.length - 1;
     }
-    this.updateIndicator();
+    if (changed) {
+      this.updateIndicator();
+    }
   }
 
   get activeIndex() {
