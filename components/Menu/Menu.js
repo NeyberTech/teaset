@@ -18,8 +18,9 @@ export default class Menu extends Overlay {
   //   icon: PropTypes.oneOfType([PropTypes.element, PropTypes.shape({uri: PropTypes.string}), PropTypes.number, PropTypes.oneOf(['none', 'empty'])]),
   //   onPress: PropTypes.func,
   static show(fromBounds, items, options = {}) {
+    let { hideWhenUnderViewMove, ...rest } = options;
     return super.show(
-      <this.MenuView fromBounds={fromBounds} items={items} {...options} />
+      <this.MenuView fromBounds={fromBounds} items={items} {...rest} />, { hideWhenUnderViewMove }
     );
   }
 
