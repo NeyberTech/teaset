@@ -3,7 +3,7 @@
 'use strict';
 
 import React, {Component} from "react";
-import {View， DeviceEventEmitter} from 'react-native';
+import {View, DeviceEventEmitter} from 'react-native';
 
 import TopView from './TopView';
 import OverlayView from './OverlayView';
