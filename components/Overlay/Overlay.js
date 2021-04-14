@@ -38,9 +38,11 @@ export default class Overlay {
     let { hideWhenUnderViewMove } = options;
     if (hideWhenUnderViewMove) {
       let moveListener = DeviceEventEmitter.addListener('underViewMove',function(){
-        Overlay.hide(key);
         moveListener.remove();
         closeListener.remove();
+        setTimeout(()=>{
+          Overlay.hide(key);
+        }, 10);
       });
       let closeListener = DeviceEventEmitter.addListener('removeOverlay',function({key: _key} = {}){
         if (key === _key) {
