@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 import Theme from 'teaset/themes/Theme';
 
 let keyValue = 0;
+let _fitRedux = false;
+
+export function fitRedux( val = true ){
+  _fitRedux = val;
+}
 
 export default class TopView extends Component {
 
@@ -260,11 +265,18 @@ AppRegistry.registerComponent = function(appKey, componentProvider) {
   class RootElement extends Component {
     render() {
       let Component = componentProvider();
-      return (
-        <TopView>
+      if (_fitRedux) {
+        return (
           <Component {...this.props} />
-        </TopView>
-      );
+        );
+      }
+      else {
+        return (
+          <TopView>
+            <Component {...this.props} />
+          </TopView>
+        );
+      }
     }
   }
 
