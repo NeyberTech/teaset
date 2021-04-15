@@ -24,7 +24,7 @@ import TransformView from './components/TransformView/TransformView';
 import AlbumView from './components/AlbumView/AlbumView';
 import Wheel from './components/Wheel/Wheel';
 
-import TopView from './components/Overlay/TopView';
+import TopView, { fitRedux } from './components/Overlay/TopView';
 import Overlay from './components/Overlay/Overlay';
 import Toast from './components/Toast/Toast';
 import ActionSheet from './components/ActionSheet/ActionSheet';
@@ -66,6 +66,7 @@ var Teaset = {
   Wheel,
 
   TopView,
+  fitRedux,
   Overlay,
   Toast,
   ActionSheet,
