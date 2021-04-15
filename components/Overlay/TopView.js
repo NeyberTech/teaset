@@ -256,29 +256,29 @@ class PureView extends PureComponent {
   }
 }
 
-if (!AppRegistry.registerComponentOld) {
-  AppRegistry.registerComponentOld = AppRegistry.registerComponent;
-}
+// if (!AppRegistry.registerComponentOld) {
+//   AppRegistry.registerComponentOld = AppRegistry.registerComponent;
+// }
 
-AppRegistry.registerComponent = function(appKey, componentProvider) {
+// AppRegistry.registerComponent = function(appKey, componentProvider) {
 
-  class RootElement extends Component {
-    render() {
-      let Component = componentProvider();
-      if (_fitRedux) {
-        return (
-          <Component {...this.props} />
-        );
-      }
-      else {
-        return (
-          <TopView>
-            <Component {...this.props} />
-          </TopView>
-        );
-      }
-    }
-  }
+//   class RootElement extends Component {
+//     render() {
+//       let Component = componentProvider();
+//       if (_fitRedux) {
+//         return (
+//           <Component {...this.props} />
+//         );
+//       }
+//       else {
+//         return (
+//           <TopView>
+//             <Component {...this.props} />
+//           </TopView>
+//         );
+//       }
+//     }
+//   }
 
-  return AppRegistry.registerComponentOld(appKey, () => RootElement);
-}
+//   return AppRegistry.registerComponentOld(appKey, () => RootElement);
+// }
