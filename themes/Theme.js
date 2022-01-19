@@ -30,15 +30,16 @@ const isIPhoneX = (() => {
   if (Platform.OS === 'web') return false;
 
   return (
-    Platform.OS === 'ios' &&
-    ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
-      (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT)) ||
-    ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
-      (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)) ||
+    Platform.OS === 'ios' && (
+      ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
+        (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT)) ||
+      ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
+        (D_HEIGHT === XSMAX_WIDTH && D_WIDTH === XSMAX_HEIGHT)) ||
       ((D_HEIGHT === IPHONE12_HEIGHT && D_WIDTH === IPHONE12_WIDTH) ||
-      (D_HEIGHT === IPHONE12_WIDTH && D_WIDTH === IPHONE12_HEIGHT))
+        (D_HEIGHT === IPHONE12_WIDTH && D_WIDTH === IPHONE12_HEIGHT)) ||
       ((D_HEIGHT === IPHONE12PROMAX_HEIGHT && D_WIDTH === IPHONE12PROMAX_WIDTH) ||
-      (D_HEIGHT === IPHONE12PROMAX_WIDTH && D_WIDTH === IPHONE12PROMAX_HEIGHT))
+        (D_HEIGHT === IPHONE12PROMAX_WIDTH && D_WIDTH === IPHONE12PROMAX_HEIGHT))
+    )
   );
 })();
 
