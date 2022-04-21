@@ -18,6 +18,7 @@ export default class OverlayView extends Component {
     overlayOpacity: PropTypes.number,
     overlayPointerEvents: ViewPropTypes.pointerEvents,
     autoKeyboardInsets: PropTypes.bool,
+    closeOnHardwareBackPress: PropTypes.bool, //android only
     onAppearCompleted: PropTypes.func,
     onDisappearCompleted: PropTypes.func,
     onCloseRequest: PropTypes.func, //(overlayView)
@@ -28,6 +29,7 @@ export default class OverlayView extends Component {
     animated: false,
     overlayPointerEvents: 'auto',
     autoKeyboardInsets: false,
+    closeOnHardwareBackPress: true
   };
 
   constructor(props) {
@@ -46,8 +48,12 @@ export default class OverlayView extends Component {
     if (Platform.OS === 'android') {
       let BackHandler = ReactNative.BackHandler ? ReactNative.BackHandler : ReactNative.BackAndroid;
       this.backListener = BackHandler.addEventListener('hardwareBackPress', () => {
-        this.closeRequest();
-        return true;
+        if (this.props.closeOnHardwareBackPress) {
+          this.closeRequest();
+          return true;          
+        } else {
+          return false;
+        }
       });
     }
   }
