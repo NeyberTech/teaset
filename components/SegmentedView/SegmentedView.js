@@ -124,6 +124,7 @@ export default class SegmentedView extends Component {
               titleStyle={item.props.titleStyle}
               activeTitleStyle={item.props.activeTitleStyle}
               badge={item.props.badge}
+              style={item.props.style}
               />
           ))}
         </SegmentedBar>
