@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import {Platform, TouchableWithoutFeedback, Animated, ViewPropTypes} from 'react-native';
 // import Easing from 'react-native/Libraries/Animated/Easing';
-import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
+// import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 
 if (Platform.constants.reactNativeVersion.major === 0 && Platform.constants.reactNativeVersion.minor < 62) {
   console.error('this teaset edition need react native 0.62.0 or above, please use teaset@0.7.1 in earlier version of react native');
@@ -144,8 +144,10 @@ export default class TouchableOpacity extends Component {
   }
 
   _getChildStyleOpacityWithDefault() {
-    const opacity = flattenStyle(this.props.style)?.opacity;
-    return typeof opacity === 'number' ? opacity : 1;
+    // Compatible for RN-Web
+    // const opacity = flattenStyle(this.props.style)?.opacity;
+    // return typeof opacity === 'number' ? opacity : 1;
+    return 1;
   }
 
   render() {
