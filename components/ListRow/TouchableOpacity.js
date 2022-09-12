@@ -7,7 +7,7 @@ import {Platform, TouchableWithoutFeedback, Animated, ViewPropTypes} from 'react
 // import Easing from 'react-native/Libraries/Animated/Easing';
 // import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 
-if (Platform.constants.reactNativeVersion.major === 0 && Platform.constants.reactNativeVersion.minor < 62) {
+if (Platform.OS !== 'web' && Platform.constants.reactNativeVersion.major === 0 && Platform.constants.reactNativeVersion.minor < 62) {
   console.error('this teaset edition need react native 0.62.0 or above, please use teaset@0.7.1 in earlier version of react native');
 }
 
