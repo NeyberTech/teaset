@@ -19,9 +19,29 @@ const IPHONE12_WIDTH = 390;
 const IPHONE12_HEIGHT = 844;
 const IPHONE12PROMAX_WIDTH = 428;
 const IPHONE12PROMAX_HEIGHT = 926;
-// IPHONE13 Series = IPHONE12 Series
+// IPHONE14 & IPHONE14 Plus = IPHONE13 Series = IPHONE12 Series
+
+// Dynamic island device
+const IPHONE14PRO_WIDTH = 393;
+const IPHONE14PRO_HEIGHT = 852;
+const IPHONE14PROMAX_WIDTH = 430;
+const IPHONE14PROMAX_HEIGHT = 932;
 
 const {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
+
+// 灵动岛异形屏
+const isDynamicIslandIPhone = (() => {
+  if (Platform.OS === 'web') return false;
+
+  return (
+    Platform.OS === 'ios' && (
+      ((D_HEIGHT === IPHONE14PRO_HEIGHT && D_WIDTH === IPHONE14PRO_WIDTH) ||
+        (D_HEIGHT === IPHONE14PRO_WIDTH && D_WIDTH === IPHONE14PRO_HEIGHT)) ||
+      ((D_HEIGHT === IPHONE14PROMAX_HEIGHT && D_WIDTH === IPHONE14PROMAX_WIDTH) ||
+        (D_HEIGHT === IPHONE14PROMAX_WIDTH && D_WIDTH === IPHONE14PROMAX_HEIGHT))  
+    )
+  );
+})();
 
 const isIPhoneX = (() => {
   if (Platform.OS === 'web') return false;
@@ -35,7 +55,8 @@ const isIPhoneX = (() => {
       ((D_HEIGHT === IPHONE12_HEIGHT && D_WIDTH === IPHONE12_WIDTH) ||
         (D_HEIGHT === IPHONE12_WIDTH && D_WIDTH === IPHONE12_HEIGHT)) ||
       ((D_HEIGHT === IPHONE12PROMAX_HEIGHT && D_WIDTH === IPHONE12PROMAX_WIDTH) ||
-        (D_HEIGHT === IPHONE12PROMAX_WIDTH && D_WIDTH === IPHONE12PROMAX_HEIGHT))
+        (D_HEIGHT === IPHONE12PROMAX_WIDTH && D_WIDTH === IPHONE12PROMAX_HEIGHT)) ||
+      isDynamicIslandIPhone
     )
   );
 })();
@@ -72,6 +93,8 @@ const Theme = {
   isPad: isIPad,
 
   isIPhoneX: isIPhoneX,
+  
+  isDynamicIslandIPhone: isDynamicIslandIPhone,
 
   fitIPhoneX: true,
 
@@ -81,7 +104,7 @@ const Theme = {
 
   get statusBarHeight() {
     if (Platform.OS === 'ios') {
-      if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? 44 : 20);
+      if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? (this.isDynamicIslandIPhone ? 54 : 44) : 20);
       if (this.isPad) return 20;
     } else if (Platform.OS === 'android') {
       if (Platform.Version > 20) return StatusBar.currentHeight; //translucent StatusBar is required
@@ -93,10 +116,11 @@ const Theme = {
   get screenInset() {
     let isLandscape = this.isLandscape;
     let isIPhoneX = this.isIPhoneX;
+    let isDynamicIslandIPhone = this.isDynamicIslandIPhone;
     let fitIPhoneX = this.fitIPhoneX;
     return ({
-      left: isLandscape && isIPhoneX && fitIPhoneX ? 44 : 0,
-      right: isLandscape && isIPhoneX && fitIPhoneX ? 44 : 0,
+      left: isLandscape && isIPhoneX && fitIPhoneX ? (isDynamicIslandIPhone ? 54 : 44) : 0,
+      right: isLandscape && isIPhoneX && fitIPhoneX ? (isDynamicIslandIPhone ? 54 : 44) : 0,
       top: this.statusBarHeight,
       bottom: isIPhoneX && fitIPhoneX ? (isLandscape ? 24 : 34) : 0,
     });
