@@ -4,10 +4,10 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
 import {Platform, TouchableWithoutFeedback, Animated, ViewPropTypes} from 'react-native';
-import Easing from 'react-native/Libraries/Animated/src/Easing';
-import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
+// import Easing from 'react-native/Libraries/Animated/Easing';
+// import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 
-if (Platform.constants.reactNativeVersion.major === 0 && Platform.constants.reactNativeVersion.minor < 62) {
+if (Platform.OS !== 'web' && Platform.constants.reactNativeVersion.major === 0 && Platform.constants.reactNativeVersion.minor < 62) {
   console.error('this teaset edition need react native 0.62.0 or above, please use teaset@0.7.1 in earlier version of react native');
 }
 
@@ -32,9 +32,10 @@ export default class TouchableOpacity extends Component {
   }
 
   componentDidMount() {
-    import('react-native/Libraries/Pressability/Pressability.js')
-      .then(Pressability => this.initPressability(Pressability.default))
-      .catch(error => console.error(error));
+    // Compatible for RN-Web
+    // import('react-native/Libraries/Pressability/Pressability.js')
+    //   .then(Pressability => this.initPressability(Pressability.default))
+    //   .catch(error => console.error(error));
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -130,7 +131,7 @@ export default class TouchableOpacity extends Component {
     Animated.timing(this.state.anim, {
       toValue,
       duration,
-      easing: Easing.inOut(Easing.quad),
+      // easing: Easing.inOut(Easing.quad),
       useNativeDriver: true,
     }).start();
   }
@@ -144,8 +145,10 @@ export default class TouchableOpacity extends Component {
   }
 
   _getChildStyleOpacityWithDefault() {
-    const opacity = flattenStyle(this.props.style)?.opacity;
-    return typeof opacity === 'number' ? opacity : 1;
+    // Compatible for RN-Web
+    // const opacity = flattenStyle(this.props.style)?.opacity;
+    // return typeof opacity === 'number' ? opacity : 1;
+    return 1;
   }
 
   render() {

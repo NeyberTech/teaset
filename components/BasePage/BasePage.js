@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import ReactNative, {Platform, View, ViewPropTypes} from 'react-native';
 
 import Theme from 'teaset/themes/Theme';
-import TeaNavigator from '../TeaNavigator/TeaNavigator';
+// import TeaNavigator from '../TeaNavigator/TeaNavigator';
 import KeyboardSpace from '../KeyboardSpace/KeyboardSpace';
 
 export default class BasePage extends Component {
@@ -21,7 +21,7 @@ export default class BasePage extends Component {
 
   static defaultProps = {
     ...View.defaultProps,
-    scene: TeaNavigator.SceneConfigs.Replace,
+    // scene: TeaNavigator.SceneConfigs.Replace,
     autoKeyboardInsets: Platform.OS === 'ios',
     keyboardTopInsets: 0,
   };
@@ -54,13 +54,13 @@ export default class BasePage extends Component {
     this.didMount = false;
   }
 
-  get navigator() {
-    if (!this.context.navigator) {
-      console.error('The root component is NOT TeaNavigator, then you can not use BasePage.navigator.');
-      return null;
-    }
-    return this.context.navigator();
-  }
+  // get navigator() {
+  //   if (!this.context.navigator) {
+  //     console.error('The root component is NOT TeaNavigator, then you can not use BasePage.navigator.');
+  //     return null;
+  //   }
+  //   return this.context.navigator();
+  // }
 
   //Call after the scene transition by Navigator.onDidFocus
   onDidFocus() {
