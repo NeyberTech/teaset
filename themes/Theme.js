@@ -27,14 +27,20 @@ const IPHONE14PRO_HEIGHT = 852;
 const IPHONE14PROMAX_WIDTH = 430;
 const IPHONE14PROMAX_HEIGHT = 932;
 
-const {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
+let {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
+
+if (Platform.OS === 'web') {
+  D_WIDTH = window.outerWidth;
+  D_HEIGHT = window.outerHeight;
+}
+
+const isIPhoneWeb = Platform.OS === 'web' && navigator.platform === 'iPhone';
+const isIPadWeb = Platform.OS === 'web' && navigator.platform === 'iPad';
 
 // 灵动岛异形屏
 const isDynamicIslandIPhone = (() => {
-  if (Platform.OS === 'web') return false;
-
   return (
-    Platform.OS === 'ios' && (
+    (Platform.OS === 'ios' || isIPhoneWeb) && (
       ((D_HEIGHT === IPHONE14PRO_HEIGHT && D_WIDTH === IPHONE14PRO_WIDTH) ||
         (D_HEIGHT === IPHONE14PRO_WIDTH && D_WIDTH === IPHONE14PRO_HEIGHT)) ||
       ((D_HEIGHT === IPHONE14PROMAX_HEIGHT && D_WIDTH === IPHONE14PROMAX_WIDTH) ||
@@ -44,10 +50,8 @@ const isDynamicIslandIPhone = (() => {
 })();
 
 const isIPhoneX = (() => {
-  if (Platform.OS === 'web') return false;
-
   return (
-    Platform.OS === 'ios' && (
+    (Platform.OS === 'ios' || isIPhoneWeb) && (
       ((D_HEIGHT === X_HEIGHT && D_WIDTH === X_WIDTH) ||
         (D_HEIGHT === X_WIDTH && D_WIDTH === X_HEIGHT)) ||
       ((D_HEIGHT === XSMAX_HEIGHT && D_WIDTH === XSMAX_WIDTH) ||
@@ -62,7 +66,7 @@ const isIPhoneX = (() => {
 })();
 
 const isIPad = (() => {
-  if (Platform.OS !== 'ios' || isIPhoneX) return false;
+  if ((Platform.OS !== 'ios' && !isIPadWeb) || isIPhoneX) return false;
 
   // if portrait and width is smaller than iPad width
   if (D_HEIGHT > D_WIDTH && D_WIDTH < PAD_WIDTH) {
@@ -90,6 +94,11 @@ const Theme = {
     Object.assign(this, theme);
   },
 
+  isIOSWeb: isIPhoneWeb || isIPadWeb,
+  isIOSWebInAPP: false,
+  isIPhoneWeb,
+  isIPadWeb,
+
   isPad: isIPad,
 
   isIPhoneX: isIPhoneX,
@@ -103,7 +112,10 @@ const Theme = {
   },
 
   get statusBarHeight() {
-    if (Platform.OS === 'ios') {
+    if (this.isIOSWeb && !this.isIOSWebInAPP) {
+      return 0;
+    }
+    else if (Platform.OS === 'ios' || (this.isIOSWeb && this.isIOSWebInAPP)) {
       if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? (this.isDynamicIslandIPhone ? 54 : 44) : 20);
       if (this.isPad) return 20;
     } else if (Platform.OS === 'android') {
