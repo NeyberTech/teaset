@@ -149,10 +149,16 @@ export default class NavigationBar extends Component {
 
     if (!statusBarColor) statusBarColor = statusBarInsets && (Platform.OS === 'ios' || Platform.Version > 20) ? 'rgba(0,0,0,0)' : fs.backgroundColor;
     if (!statusBarStyle) statusBarStyle = Theme.navStatusBarStyle ? Theme.navStatusBarStyle : 'default';
-
-    return (
-      <StatusBar backgroundColor={statusBarColor} translucent={true} barStyle={statusBarStyle} animated={animated} hidden={statusBarHidden} />
-    );
+    
+    // iOS browser do not need a StatusBar.
+    if (Theme.isIOSWeb && !Theme.isIOSWebInAPP) {
+      return null;
+    }
+    else {
+      return (
+        <StatusBar backgroundColor={statusBarColor} translucent={true} barStyle={statusBarStyle} animated={animated} hidden={statusBarHidden} />
+      );
+    }
   }
 
   renderBackground() {
