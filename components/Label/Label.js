@@ -62,11 +62,39 @@ export default class Label extends Component {
   }
 
   render() {
-    let {style, type, size, text, children, ...others} = this.props;
-    return (
+    let { style, type, size, text, children, withRedDot, redDotContainerStyle, redDotStyle, ...others } = this.props;
+    
+    redDotContainerStyle=[{
+      height: 6,
+      width: 6,
+      backgroundColor: '#fff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      position: 'absolute',
+      right: -4,
+      top: 0,
+    }].concat(redDotContainerStyle)
+
+    redDotStyle=[{
+      height: 5,
+      width: 5,
+      borderRadius: 2.5,
+      backgroundColor: '#F44336',
+    }].concat(redDotStyle)
+
+    return (withRedDot ?
+    <View>
       <Text style={this.buildStyle()} {...others}>
         {(text || text === '' || text === 0) ? text : children}
       </Text>
-    );
+      <View style={redDotContainerStyle}>
+        <View style={redDotStyle} />
+      </View>
+    </View> :
+    <Text style={this.buildStyle()} {...others}>
+    {(text || text === '' || text === 0) ? text : children}
+    </Text>)
   }
 }
+
+

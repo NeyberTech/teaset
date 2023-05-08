@@ -208,13 +208,14 @@ export default class SegmentedBar extends Component {
   }
 
   renderIndicator() {
-    let {indicatorLineColor, indicatorLineWidth, indicatorPositionPadding} = this.props;
+    let {indicatorLineColor, indicatorLineWidth, indicatorPositionPadding, indicatorStyle} = this.props;
     let style = {
       backgroundColor: indicatorLineColor ? indicatorLineColor : Theme.sbIndicatorLineColor,
       position: 'absolute',
       left: this._indicatorX,
       width: this._indicatorWidth,
       height: indicatorLineWidth || indicatorLineWidth === 0 ? indicatorLineWidth : Theme.sbIndicatorLineWidth,
+      ...indicatorStyle
     };
     if (this.props.indicatorPosition == 'top') {
       style.top = indicatorPositionPadding || indicatorPositionPadding === 0 ? indicatorPositionPadding : Theme.sbIndicatorPositionPadding;
