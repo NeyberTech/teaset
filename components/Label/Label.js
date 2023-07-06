@@ -84,7 +84,7 @@ export default class Label extends Component {
 
     return (withRedDot ?
     <View>
-      <Text style={this.buildStyle()} {...others}>
+      <Text style={[this.buildStyle(), {alignSelf:'center',flexGrow:0,flexShrink:0}]} {...others}>
         {(text || text === '' || text === 0) ? text : children}
       </Text>
       <View style={redDotContainerStyle}>
