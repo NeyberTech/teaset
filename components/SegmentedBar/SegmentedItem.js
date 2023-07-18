@@ -5,7 +5,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
-import {TextPropTypes} from 'deprecated-react-native-prop-types';
+import {TextPropTypes, ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import Badge from '../Badge/Badge';
