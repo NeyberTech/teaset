@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import ReactNative, {Platform, View, ViewPropTypes} from 'react-native';
+import ReactNative, { Platform, View } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import TeaNavigator from '../TeaNavigator/TeaNavigator';

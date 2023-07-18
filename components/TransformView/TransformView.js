@@ -4,7 +4,8 @@
 
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Animated, Easing, PanResponder, ViewPropTypes} from 'react-native';
+import { StyleSheet, View, Animated, Easing, PanResponder } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 

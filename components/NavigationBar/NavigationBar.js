@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, Platform, StatusBar, View, Text, Animated, ViewPropTypes, Dimensions} from 'react-native';
+import { StyleSheet, Platform, StatusBar, View, Text, Animated, Dimensions } from 'react-native';
+import {TextPropTypes, ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import NavigationTitle from './NavigationTitle';
@@ -19,7 +20,7 @@ export default class NavigationBar extends Component {
     ...ViewPropTypes,
     type: PropTypes.oneOf(['auto', 'ios', 'android']),
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
-    titleStyle: Text.propTypes.style,
+    titleStyle: TextPropTypes.style,
     leftView: PropTypes.element,
     rightView: PropTypes.element,
     tintColor: PropTypes.string, //bar tint color, default tint color leftView and rightView, set to null for no tint color

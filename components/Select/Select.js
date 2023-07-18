@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, TouchableOpacity, Image, Text, ScrollView, Keyboard} from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Image, Text, ScrollView, Keyboard } from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import PullPicker from '../PullPicker/PullPicker';
@@ -16,7 +17,7 @@ export default class Select extends Component {
     ...TouchableOpacity.propTypes,
     size: PropTypes.oneOf(['lg', 'md', 'sm']),
     value: PropTypes.any,
-    valueStyle: Text.propTypes.style,
+    valueStyle: TextPropTypes.style,
     items: PropTypes.array,
     getItemValue: PropTypes.func, //(item, index) 选择项值，item=items[index]，为空时直接使用item
     getItemText: PropTypes.func, //(item, index) return display text of item, item=items[index], use item when it's null

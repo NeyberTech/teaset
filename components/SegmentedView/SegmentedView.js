@@ -4,7 +4,9 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, ViewPropTypes} from 'react-native';
+import { View } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+
 
 import Theme from 'teaset/themes/Theme';
 import SegmentedSheet from './SegmentedSheet';

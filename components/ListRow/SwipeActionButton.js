@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
+import {TextPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 
@@ -13,7 +14,7 @@ export default class SwipeActionButton extends Component {
   static propTypes = {
     type: PropTypes.oneOf(['default', 'danger']),
     title: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
-    titleStyle: Text.propTypes.style,
+    titleStyle: TextPropTypes.style,
   };
 
   static defaultProps = {

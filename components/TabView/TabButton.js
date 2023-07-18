@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {View, Text, Image, TouchableOpacity, ViewPropTypes} from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {TextPropTypes, ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import Badge from '../Badge/Badge';
@@ -14,8 +15,8 @@ export default class TabButton extends Component {
   static propTypes = {
     ...TouchableOpacity.propTypes,
     title: PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number]),
-    titleStyle: Text.propTypes.style,
-    activeTitleStyle: Text.propTypes.style,
+    titleStyle: TextPropTypes.style,
+    activeTitleStyle: TextPropTypes.style,
     icon: PropTypes.oneOfType([PropTypes.element, PropTypes.shape({uri: PropTypes.string}), PropTypes.number]),
     activeIcon: PropTypes.oneOfType([PropTypes.element, PropTypes.shape({uri: PropTypes.string}), PropTypes.number]),
     active: PropTypes.bool,

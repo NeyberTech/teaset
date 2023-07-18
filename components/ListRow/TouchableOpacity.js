@@ -3,7 +3,8 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 
-import {Platform, TouchableWithoutFeedback, Animated, ViewPropTypes} from 'react-native';
+import { Platform, TouchableWithoutFeedback, Animated } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 import Easing from 'react-native/Libraries/Animated/Easing';
 import flattenStyle from 'react-native/Libraries/StyleSheet/flattenStyle';
 

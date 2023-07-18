@@ -4,7 +4,8 @@
 
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {Animated, View, ViewPropTypes} from 'react-native';
+import { Animated, View } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import OverlayView from './OverlayView';
 

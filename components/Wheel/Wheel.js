@@ -4,7 +4,8 @@
 
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import {StyleSheet, View, Text, Animated, PanResponder, ViewPropTypes} from 'react-native';
+import { StyleSheet, View, Text, Animated, PanResponder } from 'react-native';
+import {TextPropTypes, ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import WheelItem from './WheelItem';
@@ -14,7 +15,7 @@ export default class Wheel extends Component {
   static propTypes = {
     ...ViewPropTypes,
     items: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.element, PropTypes.string, PropTypes.number])).isRequired,
-    itemStyle: Text.propTypes.style,
+    itemStyle: TextPropTypes.style,
     holeStyle: ViewPropTypes.style, //height is required
     maskStyle: ViewPropTypes.style,
     holeLine: PropTypes.oneOfType([PropTypes.element, PropTypes.number]),

@@ -4,7 +4,8 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Text, Image} from 'react-native';
+import { Text, Image } from 'react-native';
+import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import NavigationButton from './NavigationButton';
@@ -16,7 +17,7 @@ export default class NavigationBackButton extends NavigationButton {
   static propTypes = {
     ...NavigationButton.propTypes,
     title: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    icon: Image.propTypes.source,
+    icon: ImagePropTypes.source,
   };
 
   static defaultProps = {

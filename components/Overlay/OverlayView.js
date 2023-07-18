@@ -4,7 +4,8 @@
 
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
-import ReactNative, {StyleSheet, Animated, View, PanResponder, Platform, ViewPropTypes} from 'react-native';
+import ReactNative, { StyleSheet, Animated, View, PanResponder, Platform } from 'react-native';
+import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import KeyboardSpace from '../KeyboardSpace/KeyboardSpace';

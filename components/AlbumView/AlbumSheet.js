@@ -6,6 +6,7 @@ import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {StyleSheet, View, Image, Animated, Easing} from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
+import {ImagePropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 import TransformView from '../TransformView/TransformView';
@@ -14,8 +15,8 @@ export default class AlbumSheet extends TransformView {
 
   static propTypes = {
     ...TransformView.propTypes,
-    image: PropTypes.oneOfType([Image.propTypes.source, PropTypes.element]).isRequired,
-    thumb: Image.propTypes.source,
+    image: PropTypes.oneOfType([ImagePropTypes.source, PropTypes.element]).isRequired,
+    thumb: ImagePropTypes.source,
     defaultPosition: PropTypes.oneOf(['center', 'left', 'right']),
     space: PropTypes.number,
     load: PropTypes.bool,
