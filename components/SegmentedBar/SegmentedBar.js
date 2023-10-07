@@ -71,6 +71,7 @@ export default class SegmentedBar extends Component {
   }
 
   set activeIndex(value) {
+    this.props.onPress && this.props.onPress(value);
     if (this._activeIndex != value) {
       this._activeIndex = value;
       this.updateIndicator();
