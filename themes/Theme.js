@@ -108,7 +108,7 @@ const Theme = {
   fitIPhoneX: true,
 
   get isLandscape() {
-    return Dimensions.get('window').width > Dimensions.get('window').height;
+    return Platform.OS !== 'web' && Dimensions.get('window').width > Dimensions.get('window').height;
   },
 
   get statusBarHeight() {
