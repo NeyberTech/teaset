@@ -26,6 +26,10 @@ const IPHONE14PRO_WIDTH = 393;
 const IPHONE14PRO_HEIGHT = 852;
 const IPHONE14PROMAX_WIDTH = 430;
 const IPHONE14PROMAX_HEIGHT = 932;
+const IPHONE16PRO_WIDTH = 402;
+const IPHONE16PRO_HEIGHT = 874;
+const IPHONE16PROMAX_WIDTH = 440;
+const IPHONE16PROMAX_HEIGHT = 956;
 
 let {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
 
@@ -41,10 +45,22 @@ const isIPadWeb = Platform.OS === 'web' && navigator.platform === 'iPad';
 const isDynamicIslandIPhone = (() => {
   return (
     (Platform.OS === 'ios' || isIPhoneWeb) && (
-      ((D_HEIGHT === IPHONE14PRO_HEIGHT && D_WIDTH === IPHONE14PRO_WIDTH) ||
-        (D_HEIGHT === IPHONE14PRO_WIDTH && D_WIDTH === IPHONE14PRO_HEIGHT)) ||
-      ((D_HEIGHT === IPHONE14PROMAX_HEIGHT && D_WIDTH === IPHONE14PROMAX_WIDTH) ||
-        (D_HEIGHT === IPHONE14PROMAX_WIDTH && D_WIDTH === IPHONE14PROMAX_HEIGHT))  
+      (
+        (D_HEIGHT === IPHONE14PRO_HEIGHT && D_WIDTH === IPHONE14PRO_WIDTH) ||
+        (D_HEIGHT === IPHONE14PRO_WIDTH && D_WIDTH === IPHONE14PRO_HEIGHT)
+      ) ||
+      (
+        (D_HEIGHT === IPHONE14PROMAX_HEIGHT && D_WIDTH === IPHONE14PROMAX_WIDTH) ||
+        (D_HEIGHT === IPHONE14PROMAX_WIDTH && D_WIDTH === IPHONE14PROMAX_HEIGHT)
+      ) ||
+      (
+        (D_HEIGHT === IPHONE16PRO_HEIGHT && D_WIDTH === IPHONE16PRO_WIDTH) ||
+        (D_HEIGHT === IPHONE16PRO_WIDTH && D_WIDTH === IPHONE16PRO_HEIGHT)
+      ) ||
+      (
+        (D_HEIGHT === IPHONE16PROMAX_HEIGHT && D_WIDTH === IPHONE16PROMAX_WIDTH) ||
+        (D_HEIGHT === IPHONE16PROMAX_WIDTH && D_WIDTH === IPHONE16PROMAX_HEIGHT)
+      )
     )
   );
 })();
