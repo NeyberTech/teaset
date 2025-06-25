@@ -21,10 +21,10 @@ import SegmentedBar from './components/SegmentedBar/SegmentedBar';
 import SegmentedView from './components/SegmentedView/SegmentedView';
 import TabView from './components/TabView/TabView';
 import TransformView from './components/TransformView/TransformView';
-import AlbumView from './components/AlbumView/AlbumView';
+// import AlbumView from './components/AlbumView/AlbumView';
 import Wheel from './components/Wheel/Wheel';
 
-import TopView from './components/Overlay/TopView';
+import TopView, { fitRedux } from './components/Overlay/TopView';
 import Overlay from './components/Overlay/Overlay';
 import Toast from './components/Toast/Toast';
 import ActionSheet from './components/ActionSheet/ActionSheet';
@@ -35,7 +35,7 @@ import Menu from './components/Menu/Menu';
 import Drawer from './components/Drawer/Drawer';
 import ModalIndicator from './components/ModalIndicator/ModalIndicator';
 
-import TeaNavigator from './components/TeaNavigator/TeaNavigator';
+// import TeaNavigator from './components/TeaNavigator/TeaNavigator';
 import BasePage from './components/BasePage/BasePage';
 import NavigationPage from './components/NavigationPage/NavigationPage';
 
@@ -62,10 +62,11 @@ var Teaset = {
   SegmentedView,
   TabView,
   TransformView,
-  AlbumView,
+  // AlbumView,
   Wheel,
 
   TopView,
+  fitRedux,
   Overlay,
   Toast,
   ActionSheet,
@@ -76,7 +77,7 @@ var Teaset = {
   Drawer,
   ModalIndicator,
 
-  TeaNavigator,
+  // TeaNavigator,
   BasePage,
   NavigationPage,
 

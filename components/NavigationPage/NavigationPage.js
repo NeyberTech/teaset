@@ -4,10 +4,10 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Platform, View, Dimensions} from 'react-native';
+import {Platform, View, Dimensions, ViewPropTypes, StyleSheet} from 'react-native';
 
 import Theme from 'teaset/themes/Theme';
-import TeaNavigator from '../TeaNavigator/TeaNavigator';
+// import TeaNavigator from '../TeaNavigator/TeaNavigator';
 import BasePage from '../BasePage/BasePage';
 import NavigationBar from '../NavigationBar/NavigationBar';
 import KeyboardSpace from '../KeyboardSpace/KeyboardSpace';
@@ -19,11 +19,12 @@ export default class NavigationPage extends BasePage {
     title: PropTypes.string,
     showBackButton: PropTypes.bool,
     navigationBarInsets: PropTypes.bool,
+    pageContainerStyle: ViewPropTypes.style,
   };
 
   static defaultProps = {
     ...BasePage.defaultProps,
-    scene: TeaNavigator.SceneConfigs.PushFromRight,
+    // scene: TeaNavigator.SceneConfigs.PushFromRight,
     title: null,
     showBackButton: false,
     navigationBarInsets: true,
@@ -76,20 +77,20 @@ export default class NavigationPage extends BasePage {
   }
 
   render() {
-    let {style, children, scene, autoKeyboardInsets, keyboardTopInsets, title, showBackButton, navigationBarInsets, ...others} = this.props;
+    let {style, pageContainerStyle, children, scene, autoKeyboardInsets, keyboardTopInsets, title, showBackButton, navigationBarInsets, ...others} = this.props;
 
     let {left: paddingLeft, right: paddingRight} = Theme.screenInset;
-    let pageContainerStyle = [{
+    let pageContainerFs = [{
       flex: 1,
       paddingLeft,
       paddingRight,
       marginTop: navigationBarInsets ? (Theme.navBarContentHeight + Theme.statusBarHeight) : 0,
-    }];
+    }, StyleSheet.flatten(pageContainerStyle)];
 
     return (
       <View style={this.buildStyle()} onLayout={e => this.onLayout(e)} {...others}>
         <View style={{flex: 1}} >
-          <View style={pageContainerStyle}>
+          <View style={pageContainerFs}>
             {this.renderPage()}
           </View>
           {this.renderNavigationBar()}

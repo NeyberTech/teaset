@@ -8,6 +8,7 @@ NavigationPage 定义一个导航页面组件, 继承自 [BasePage](./BasePage.m
 | title | string | null | 导航条标题。
 | showBackButton | bool | false | 是否显示返回按钮。
 | navigationBarInsets | bool | true | 是否为内容区域增加导航条占用空间。<br/>此属性默认为 true, 使得内容不被导航条遮挡, 如果页面内容实用 ScrollView 且需要自行控制 NavigationBar 导航条的显示/隐藏, 那么你需要将此属性设置为 false 并自行在 ScrollView 容器里增加导航条的占用空间, 这样可以在导航条隐藏后把顶部空间利用起来。
+| containerStyle | 同View.style |  | 页面容器样式。
 | scene | object | Navigator.SceneConfigs.PushFromRight | 继承自 BasePage 并修改默认值。
 
 ## Methods

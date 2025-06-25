@@ -421,6 +421,7 @@ export default {
   menuItemIconHeight: 16,
   menuItemIconColor: '#c1c2cc',
   menuItemIconPaddingRight: 12,
+  menuItemMaxWidth: 250,
 
   //ModalIndicator
   miIndicatorColor: '#c1c2cc',

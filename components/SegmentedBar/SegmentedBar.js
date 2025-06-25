@@ -57,13 +57,16 @@ export default class SegmentedBar extends Component {
       this._itemsLayout = nextItemsLayout;
       this._itemsAddWidth = this.makeArray(this._itemsAddWidth, this.props.children, 0);
     }
+    const changed = this.props.activeIndex !== this._activeIndex;
     if (this.props.activeIndex || this.props.activeIndex === 0) {
       this._activeIndex = this.props.activeIndex;
     }
     if (this._activeIndex >= nextItemsLayout.length) {
       this._activeIndex = nextItemsLayout.length - 1;
     }
-    this.updateIndicator();
+    if (changed) {
+      this.updateIndicator();
+    }
   }
 
   get activeIndex() {
@@ -81,16 +84,35 @@ export default class SegmentedBar extends Component {
   }
 
   get indicatorXValue() {
-    switch (this.props.indicatorType) {
-      case 'boxWidth':
-        return this._buttonsLayout[this._activeIndex].x;
-      case 'itemWidth':
-        return this._buttonsLayout[this._activeIndex].x + this._itemsLayout[this._activeIndex].x + this._itemsAddWidth[this._activeIndex] / 2;
-      case 'customWidth':
-        const isMoreThanDefault = this.props.indicatorWidth > this._itemsLayout[this.activeIndex].width;
-        return isMoreThanDefault ?
-          this._buttonsLayout[this._activeIndex].x + this._itemsLayout[this._activeIndex].x
-          : this._buttonsLayout[this._activeIndex].x + (this._buttonsLayout[this._activeIndex].width - this.props.indicatorWidth) / 2;
+    // For RTL
+    if (I18nManager.isRTL) {
+      let contextWidth = 0;
+      this._buttonsLayout.map(item => contextWidth += item.width);
+
+      switch (this.props.indicatorType) {
+        case 'boxWidth':
+          return contextWidth - this._buttonsLayout[this._activeIndex].x - this._buttonsLayout[this._activeIndex].width;
+        case 'itemWidth':
+          return contextWidth - (this._buttonsLayout[this._activeIndex].x + this._itemsLayout[this._activeIndex].width + this._itemsLayout[this._activeIndex].x + this._itemsAddWidth[this._activeIndex] / 2);
+        case 'customWidth':
+          const isMoreThanDefault = this.props.indicatorWidth > this._itemsLayout[this.activeIndex].width;
+          return isMoreThanDefault 
+          ? contextWidth - this._buttonsLayout[this._activeIndex].x - this._itemsLayout[this._activeIndex].x - this._itemsLayout[this._activeIndex].width
+            : contextWidth - this._buttonsLayout[this._activeIndex].x - (this._buttonsLayout[this._activeIndex].width + this.props.indicatorWidth) / 2;
+      }
+    }
+    else {
+      switch (this.props.indicatorType) {
+        case 'boxWidth':
+          return this._buttonsLayout[this._activeIndex].x;
+        case 'itemWidth':
+          return this._buttonsLayout[this._activeIndex].x + this._itemsLayout[this._activeIndex].x + this._itemsAddWidth[this._activeIndex] / 2;
+        case 'customWidth':
+          const isMoreThanDefault = this.props.indicatorWidth > this._itemsLayout[this.activeIndex].width;
+          return isMoreThanDefault ?
+            this._buttonsLayout[this._activeIndex].x + this._itemsLayout[this._activeIndex].x
+            : this._buttonsLayout[this._activeIndex].x + (this._buttonsLayout[this._activeIndex].width - this.props.indicatorWidth) / 2;
+      }
     }
     return 0;
   }
@@ -152,7 +174,15 @@ export default class SegmentedBar extends Component {
     if (this.props.autoScroll && this.refs.scrollView) {
       let contextWidth = 0;
       this._buttonsLayout.map(item => contextWidth += item.width);
-      let x = indicatorXValue + indicatorWidthValue / 2 - this._scrollViewWidth / 2;
+      
+      // For android RTL scroll direction
+      let x = 0;
+      if (I18nManager.isRTL && Platform.OS == 'android') {
+        x = contextWidth - indicatorXValue - indicatorWidthValue / 2 - this._scrollViewWidth / 2;
+      } else {
+        x = indicatorXValue + indicatorWidthValue / 2 - this._scrollViewWidth / 2;
+      }
+
       if (x < 0) {
         x = 0;
       } else if (x > contextWidth - this._scrollViewWidth) {

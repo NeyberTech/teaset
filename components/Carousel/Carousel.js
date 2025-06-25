@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {StyleSheet, View, ScrollView} from 'react-native';
+import {StyleSheet, View, ScrollView, I18nManager, Platform} from 'react-native';
 
 import Theme from 'teaset/themes/Theme';
 import CarouselControl from './CarouselControl';
@@ -141,9 +141,17 @@ export default class Carousel extends Component {
     if (cardIndex < 0) cardIndex = 0;
     else if (cardIndex >= this.cardCount) cardIndex = this.cardCount - 1;
     if (this.refs.scrollView) {
-      if (this.props.horizontal)
-        this.refs.scrollView.scrollTo({x: width * cardIndex, y: 0, animated: animated});
-      else this.refs.scrollView.scrollTo({x: 0, y: height * cardIndex, animated: animated});      
+      if (this.props.horizontal) {
+        // For RTL android scroll direction reverse
+        let _cardIndex = cardIndex;
+        if (I18nManager.isRTL && Platform.OS == 'android') {
+          _cardIndex = this.pageCount - cardIndex - 1;
+        }
+        this.refs.scrollView.scrollTo({x: width * _cardIndex, y: 0, animated: animated});
+      }
+      else {
+        this.refs.scrollView.scrollTo({x: 0, y: height * cardIndex, animated: animated});      
+      }
     }
   }
 

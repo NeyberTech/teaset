@@ -9,6 +9,11 @@ import PropTypes from 'prop-types';
 import Theme from 'teaset/themes/Theme';
 
 let keyValue = 0;
+let _fitRedux = false;
+
+export function fitRedux( val = true ){
+  _fitRedux = val;
+}
 
 export default class TopView extends Component {
 
@@ -32,6 +37,11 @@ export default class TopView extends Component {
 
   static restore(animated, animatesOnly = null) {
     DeviceEventEmitter.emit("restoreRoot", {animated, animatesOnly});
+  }
+  
+  static emitUnderViewMove() {
+    const args = [].slice.call(arguments, 0);
+    DeviceEventEmitter.emit("underViewMove", ...args);
   }
 
   constructor(props) {
@@ -239,29 +249,36 @@ var styles = StyleSheet.create({
 class PureView extends PureComponent {
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1}} onTouchMove={TopView.emitUnderViewMove} onTouchEnd={TopView.emitUnderViewMove}>
         {this.props.children}
       </View>
     );
   }
 }
 
-if (!AppRegistry.registerComponentOld) {
-  AppRegistry.registerComponentOld = AppRegistry.registerComponent;
-}
+// if (!AppRegistry.registerComponentOld) {
+//   AppRegistry.registerComponentOld = AppRegistry.registerComponent;
+// }
 
-AppRegistry.registerComponent = function(appKey, componentProvider) {
+// AppRegistry.registerComponent = function(appKey, componentProvider) {
 
-  class RootElement extends Component {
-    render() {
-      let Component = componentProvider();
-      return (
-        <TopView>
-          <Component {...this.props} />
-        </TopView>
-      );
-    }
-  }
+//   class RootElement extends Component {
+//     render() {
+//       let Component = componentProvider();
+//       if (_fitRedux) {
+//         return (
+//           <Component {...this.props} />
+//         );
+//       }
+//       else {
+//         return (
+//           <TopView>
+//             <Component {...this.props} />
+//           </TopView>
+//         );
+//       }
+//     }
+//   }
 
-  return AppRegistry.registerComponentOld(appKey, () => RootElement);
-}
+//   return AppRegistry.registerComponentOld(appKey, () => RootElement);
+// }

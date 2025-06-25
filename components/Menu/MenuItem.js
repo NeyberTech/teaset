@@ -31,6 +31,7 @@ export default class MenuItem extends Component {
       paddingBottom: Theme.menuItemPaddingBottom,      
       borderColor: Theme.menuItemSeparatorColor,
       borderTopWidth: Theme.menuItemSeparatorWidth,
+      maxWidth: Theme.menuItemMaxWidth,
       flexDirection: 'row',
       alignItems: 'center',
     }].concat(style);
@@ -65,7 +66,7 @@ export default class MenuItem extends Component {
         flexGrow: 1,
         flexShrink: 1,
       };
-      title = <Text style={titleStyle} numberOfLines={1}>{title}</Text>
+      title = <Text style={titleStyle}>{title}</Text>
     }
     return title;
   }

@@ -45,7 +45,7 @@ export default class Popover extends Component {
   }
 
   filterPopoverStyle(fs, includeRadius) {
-    let {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth, ...others} = fs;
+    let {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth, elevation, ...others} = fs;
     let style = includeRadius ? {borderBottomLeftRadius, borderBottomRightRadius, borderRadius, borderTopLeftRadius, borderTopRightRadius, ...others} : {...others};
     for (let key in style) {
       if (style[key] === undefined) {
@@ -56,8 +56,8 @@ export default class Popover extends Component {
   }
 
   filterContentStyle(fs) {
-    let {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth, ...others} = fs;
-    let style = {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth};
+    let {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth, elevation, ...others} = fs;
+    let style = {flexDirection, alignItems, justifyContent, margin, marginBottom, marginHorizontal, marginLeft, marginRight, marginTop, marginVertical, padding, paddingBottom, paddingHorizontal, paddingLeft, paddingRight, paddingTop, paddingVertical, backgroundColor, borderBottomColor, borderBottomLeftRadius, borderBottomRightRadius, borderBottomWidth, borderColor, borderLeftColor, borderLeftWidth, borderRadius, borderRightColor, borderRightWidth, borderStyle, borderTopColor, borderTopLeftRadius, borderTopRightRadius, borderTopWidth, borderWidth, elevation};
     for (let key in style) {
       if (style[key] === undefined) {
         delete style[key];
