@@ -4,7 +4,7 @@
 
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import { View, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { View, ScrollView, TouchableOpacity, Animated, I18nManager } from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';

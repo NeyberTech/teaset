@@ -128,10 +128,10 @@ const Theme = {
   },
 
   get statusBarHeight() {
-    if (this.isIOSWeb && !this.isIOSWebInAPP) {
+    if (Platform.OS === 'web') {
       return 0;
     }
-    else if (Platform.OS === 'ios' || (this.isIOSWeb && this.isIOSWebInAPP)) {
+    else if (Platform.OS === 'ios') {
       if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? (this.isDynamicIslandIPhone ? 54 : 44) : 20);
       if (this.isPad) return 20;
     } else if (Platform.OS === 'android') {
