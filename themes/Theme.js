@@ -33,13 +33,24 @@ const IPHONE16PROMAX_HEIGHT = 956;
 
 let {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
 
-if (Platform.OS === 'web') {
-  D_WIDTH = window.outerWidth;
-  D_HEIGHT = window.outerHeight;
-}
-
 const isIPhoneWeb = Platform.OS === 'web' && navigator.platform === 'iPhone';
 const isIPadWeb = Platform.OS === 'web' && navigator.platform === 'iPad';
+
+if (Platform.OS === 'web') {
+  // iPhone微信浏览器单独兼容
+  if (
+    isIPhoneWeb &&
+    (/MicroMessenger/i).test(window?.navigator?.userAgent) &&
+    window?.screen?.width &&
+    window?.screen?.height
+  ) {
+    D_WIDTH = window.screen.width;
+    D_HEIGHT = window.screen.height;
+  } else {
+    D_WIDTH = window.outerWidth;
+    D_HEIGHT = window.outerHeight;
+  }
+}
 
 // 灵动岛异形屏
 const isDynamicIslandIPhone = (() => {
