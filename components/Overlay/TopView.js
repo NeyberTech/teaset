@@ -4,7 +4,6 @@
 
 import React, {Component, PureComponent} from "react";
 import {StyleSheet, AppRegistry, DeviceEventEmitter, View, Animated} from 'react-native';
-import PropTypes from 'prop-types';
 
 import Theme from 'teaset/themes/Theme';
 
@@ -15,7 +14,12 @@ export function fitRedux( val = true ){
   _fitRedux = val;
 }
 
+const TopViewContext = React.createContext({
+  registerTopViewHandler: null,
+  unregisterTopViewHandler: null,
+});
 export default class TopView extends Component {
+  static contextType = TopViewContext;
 
   static add(element) {
     let key = ++keyValue;
@@ -54,35 +58,6 @@ export default class TopView extends Component {
       scaleY: new Animated.Value(1),
     };
     this.handlers = [];
-  }
-
-  static contextTypes = {
-    registerTopViewHandler: PropTypes.func,
-    unregisterTopViewHandler: PropTypes.func,
-  };
-
-  static childContextTypes = {
-    registerTopViewHandler: PropTypes.func,
-    unregisterTopViewHandler: PropTypes.func,
-  };
-
-  getChildContext() {
-    let {registerTopViewHandler, unregisterTopViewHandler} = this.context;
-    if (!registerTopViewHandler) {
-      registerTopViewHandler = handler => {
-        this.handlers.push(handler);
-      };
-      unregisterTopViewHandler = handler => {
-        for (let i = this.handlers.length - 1; i >= 0; --i) {
-          if (this.handlers[i] === handler) {
-            this.handlers.splice(i, 1);
-            return true;
-          }
-        }
-        return false;
-      }
-    }
-    return {registerTopViewHandler, unregisterTopViewHandler};
   }
 
   get handler() {
@@ -216,20 +191,30 @@ export default class TopView extends Component {
     let {elements, translateX, translateY, scaleX, scaleY} = this.state;
     let transform = [{translateX}, {translateY}, {scaleX}, {scaleY}];
     return (
-      <View style={{backgroundColor: Theme.screenColor, flex: 1}}>
-        <Animated.View style={{flex: 1, transform: transform}}>
-          <PureView>
-            {this.props.children}
-          </PureView>
-        </Animated.View>
-        {elements.map((item, index) => {
-          return (
-            <View key={'topView' + item.key} style={styles.overlay} pointerEvents='box-none'>
-              {item.element}
-            </View>
-          );
-        })}
-      </View>
+      <TopViewContext.Provider
+        value={{
+          registerTopViewHandler: (h) => this.handlers.push(h),
+          unregisterTopViewHandler: (h) => {
+            const i = this.handlers.indexOf(h);
+            if (i >= 0) this.handlers.splice(i, 1);
+          },
+        }}
+      >
+        <View style={{backgroundColor: Theme.screenColor, flex: 1}}>
+          <Animated.View style={{flex: 1, transform: transform}}>
+            <PureView>
+              {this.props.children}
+            </PureView>
+          </Animated.View>
+          {elements.map((item, index) => {
+            return (
+              <View key={'topView' + item.key} style={styles.overlay} pointerEvents='box-none'>
+                {item.element}
+              </View>
+            );
+          })}
+        </View>
+      </TopViewContext.Provider>
     );
   }
 
@@ -255,30 +240,3 @@ class PureView extends PureComponent {
     );
   }
 }
-
-// if (!AppRegistry.registerComponentOld) {
-//   AppRegistry.registerComponentOld = AppRegistry.registerComponent;
-// }
-
-// AppRegistry.registerComponent = function(appKey, componentProvider) {
-
-//   class RootElement extends Component {
-//     render() {
-//       let Component = componentProvider();
-//       if (_fitRedux) {
-//         return (
-//           <Component {...this.props} />
-//         );
-//       }
-//       else {
-//         return (
-//           <TopView>
-//             <Component {...this.props} />
-//           </TopView>
-//         );
-//       }
-//     }
-//   }
-
-//   return AppRegistry.registerComponentOld(appKey, () => RootElement);
-// }
