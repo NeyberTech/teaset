@@ -2,10 +2,11 @@
 
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import PropTypes from 'prop-types';
 import {TouchableOpacity} from 'react-native';
 
+export const NavigationContext = createContext({ tintColor: null });
 export default class NavigationButton extends Component {
 
   static propTypes = {
@@ -15,9 +16,7 @@ export default class NavigationButton extends Component {
     hitSlop: {top: 12, bottom: 12, left: 8, right: 8},
   };
 
-  static contextTypes = {
-    tintColor: PropTypes.string,
-  };
+  static contextType = NavigationContext;
 
   buildStyle() {
     let {style} = this.props;

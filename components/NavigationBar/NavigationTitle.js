@@ -2,13 +2,14 @@
 
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import PropTypes from 'prop-types';
 import { Text } from 'react-native';
 import {TextPropTypes} from 'deprecated-react-native-prop-types';
 
 import Theme from 'teaset/themes/Theme';
 
+export const NavigationContext = createContext({ tintColor: null });
 export default class NavigationTitle extends Component {
 
   static propTypes = {
@@ -22,9 +23,7 @@ export default class NavigationTitle extends Component {
     allowFontScaling: false,
   };
 
-  static contextTypes = {
-    tintColor: PropTypes.string,
-  };
+  static contextType = NavigationContext;
 
   render() {
     let {style, text, children, ...others} = this.props;

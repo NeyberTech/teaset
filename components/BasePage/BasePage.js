@@ -2,7 +2,7 @@
 
 'use strict';
 
-import React, {Component} from 'react';
+import React, {Component, createContext} from 'react';
 import PropTypes from 'prop-types';
 import ReactNative, { Platform, View } from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
@@ -11,6 +11,7 @@ import Theme from 'teaset/themes/Theme';
 // import TeaNavigator from '../TeaNavigator/TeaNavigator';
 import KeyboardSpace from '../KeyboardSpace/KeyboardSpace';
 
+export const NavigatorContext = createContext(null);
 export default class BasePage extends Component {
 
   static propTypes = {
@@ -27,9 +28,7 @@ export default class BasePage extends Component {
     keyboardTopInsets: 0,
   };
 
-  static contextTypes = {
-    navigator: PropTypes.func,
-  };
+  static contextType = NavigatorContext;
 
   constructor(props) {
     super(props);
@@ -55,14 +54,6 @@ export default class BasePage extends Component {
     this.didMount = false;
   }
 
-  // get navigator() {
-  //   if (!this.context.navigator) {
-  //     console.error('The root component is NOT TeaNavigator, then you can not use BasePage.navigator.');
-  //     return null;
-  //   }
-  //   return this.context.navigator();
-  // }
-
   //Call after the scene transition by Navigator.onDidFocus
   onDidFocus() {
     this.isFocused = true;
@@ -74,8 +65,7 @@ export default class BasePage extends Component {
 
   //Android hardware back key handler, default is pop to prev page
   onHardwareBackPress() {
-    if (!this.context.navigator) return false;
-    let navigator = this.context.navigator();
+    const navigator = this.context?.navigator;
     if (!navigator) return false;
     if (navigator.getCurrentRoutes().length > 1) {
       navigator.pop();

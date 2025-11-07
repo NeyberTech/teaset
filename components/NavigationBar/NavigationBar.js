@@ -14,7 +14,11 @@ import NavigationLinkButton from './NavigationLinkButton';
 import NavigationIconButton from './NavigationIconButton';
 import NavigationBackButton from './NavigationBackButton';
 
+const NavigationBarContext = React.createContext({
+  tintColor: Theme.navTintColor
+});
 export default class NavigationBar extends Component {
+  static contextType = NavigationBarContext;
 
   static propTypes = {
     ...ViewPropTypes,
@@ -41,10 +45,6 @@ export default class NavigationBar extends Component {
     statusBarInsets: true,
   };
 
-  static childContextTypes = {
-    tintColor: PropTypes.string,
-  };
-
   static Title = NavigationTitle;
   static Button = NavigationButton;
   static LinkButton = NavigationLinkButton;
@@ -66,10 +66,6 @@ export default class NavigationBar extends Component {
     if (prevProps.hidden != this.props.hidden) {
       this.checkBarHidden();
     }
-  }
-
-  getChildContext() {
-    return {tintColor: this.props.tintColor === undefined ? Theme.navTintColor : this.props.tintColor};
   }
 
   buildStyle() {
@@ -244,13 +240,15 @@ export default class NavigationBar extends Component {
     let {style, children, type, title, titleStyle, leftView, rightView, tintColor, background, hidden, animated, statusBarStyle, statusBarColor, statusBarHidden, statusBarInsets, onLayout, ...others} = this.props;
     let fs = StyleSheet.flatten(this.buildStyle());
     return (
-      <Animated.View style={fs} onLayout={e => this.onLayout(e)} {...others}>
-        {this.renderStatusBar(fs)}
-        {this.renderBackground()}
-        {this.renderTitle(fs)}
-        {this.renderLeftView()}
-        {this.renderRightView()}
-      </Animated.View>
+      <NavigationBarContext.Provider value={{ tintColor: tintColor === undefined ? Theme.navTintColor : tintColor }}>
+        <Animated.View style={fs} onLayout={e => this.onLayout(e)} {...others}>
+          {this.renderStatusBar(fs)}
+          {this.renderBackground()}
+          {this.renderTitle(fs)}
+          {this.renderLeftView()}
+          {this.renderRightView()}
+        </Animated.View>
+      </NavigationBarContext.Provider>
     );
   }
 }
