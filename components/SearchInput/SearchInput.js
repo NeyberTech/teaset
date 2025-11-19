@@ -55,19 +55,19 @@ export default class SearchInput extends Component {
   }
 
   focus() {
-    return this.refs.textInput && this.refs.textInput.focus();
+    return this.textInput && this.textInput.focus();
   }
 
   blur() {
-    return this.refs.textInput && this.refs.textInput.blur();
+    return this.textInput && this.textInput.blur();
   }
 
   isFocused() {
-    return this.refs.textInput && this.refs.textInput.isFocused();
+    return this.textInput && this.textInput.isFocused();
   }
 
   clear() {
-    return this.refs.textInput && this.refs.textInput.clear();
+    return this.textInput && this.textInput.clear();
   }
 
   onContainerLayout(e) {
@@ -154,7 +154,7 @@ export default class SearchInput extends Component {
             onChangeText={text => this.onChangeText(text)}
             selectionColor={this.state.selectionColor ? this.state.selectionColor : selectionColor}
             {...others}
-            ref='textInput'
+            ref={ref => { this.textInput = ref; }}
             />
         </View>
       </View>

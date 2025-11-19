@@ -171,7 +171,7 @@ export default class SegmentedBar extends Component {
       this._indicatorWidth.setValue(indicatorWidthValue);
     }
 
-    if (this.props.autoScroll && this.refs.scrollView) {
+    if (this.props.autoScroll && this.scrollView) {
       let contextWidth = 0;
       this._buttonsLayout.map(item => contextWidth += item.width);
       
@@ -188,7 +188,7 @@ export default class SegmentedBar extends Component {
       } else if (x > contextWidth - this._scrollViewWidth) {
         x = contextWidth - this._scrollViewWidth;
       }
-      this.refs.scrollView.scrollTo({x: x, y: 0, animated: this.props.animated});
+      this.scrollView.scrollTo({x: x, y: 0, animated: this.props.animated});
     }
   }
 
@@ -305,7 +305,7 @@ export default class SegmentedBar extends Component {
         scrollsToTop={false}
         removeClippedSubviews={false}
         onLayout={e => this.onScrollViewLayout(e)}
-        ref='scrollView'
+        ref={ref => { this.scrollView = ref; }}
         {...others}
       >
         {children.map((item, index) => {

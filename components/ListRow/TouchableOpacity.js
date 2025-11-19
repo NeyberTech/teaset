@@ -44,7 +44,7 @@ export default class TouchableOpacity extends Component {
     }
   }
 
-  componentWillUnmount(): void {
+  componentWillUnmount() {
     this.state.pressability && this.state.pressability.reset();
   }
 
@@ -95,11 +95,11 @@ export default class TouchableOpacity extends Component {
   }
 
   measureInWindow(callback) {
-    this.refs.animatedView && this.refs.animatedView.measureInWindow(callback);
+    this.animatedView && this.animatedView.measureInWindow(callback);
   }
 
   measure(callback) {
-    this.refs.animatedView && this.refs.animatedView.measure(callback);
+    this.animatedView && this.animatedView.measure(callback);
   }
 
   touchableHandleResponderMove(event) {
@@ -179,7 +179,7 @@ export default class TouchableOpacity extends Component {
         focusable={
           this.props.focusable !== false && this.props.onPress !== undefined
         }
-        ref='animatedView'
+        ref={ref => { this.animatedView = ref; }}
         {...eventHandlersWithoutBlurAndFocus}>
         {this.props.children}
       </Animated.View>

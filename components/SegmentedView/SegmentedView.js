@@ -50,8 +50,8 @@ export default class SegmentedView extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.activeIndex != this.props.activeIndex && this.refs.carousel) {
-      this.refs.carousel.scrollToPage(this.props.activeIndex);
+    if (prevProps.activeIndex != this.props.activeIndex && this.carousel) {
+      this.carousel.scrollToPage(this.props.activeIndex);
     }
   }
 
@@ -83,8 +83,8 @@ export default class SegmentedView extends Component {
   onSegmentedBarChange(index) {
     if (index == this.activeIndex) return;
     this.setState({activeIndex: index}, () => {
-      if (this.refs.carousel) {
-        this.refs.carousel.scrollToPage(index, false);
+      if (this.carousel) {
+        this.carousel.scrollToPage(index, false);
       }
       this.props.onChange && this.props.onChange(index);
     });
@@ -149,7 +149,7 @@ export default class SegmentedView extends Component {
         carousel={false}
         startIndex={this.activeIndex}
         cycle={false}
-        ref='carousel'
+        ref={ref => { this.carousel = ref; }}
         onChange={index => this.onCarouselChange(index)}
       >
         {this.sheets}

@@ -40,11 +40,11 @@ export default class Select extends Component {
   };
 
   measureInWindow(callback) {
-    this.refs.selectView && this.refs.selectView.measureInWindow(callback);
+    this.selectView && this.selectView.measureInWindow(callback);
   }
 
   measure(callback) {
-    this.refs.selectView && this.refs.selectView.measure(callback);
+    this.selectView && this.selectView.measure(callback);
   }
 
   get selectedIndex() {
@@ -250,7 +250,7 @@ export default class Select extends Component {
           onLayout && onLayout(e);
         }}
         {...others}
-        ref='selectView'
+        ref={ref => { this.selectView = ref; }}
       >
         {this.renderValue()}
         {this.renderIcon()}

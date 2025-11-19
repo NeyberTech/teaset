@@ -120,7 +120,7 @@ export default class TabView extends Component {
                 onPress={e => {
                   if (type === 'sheet') {
                     this.setState({activeIndex: sheetIndex}, () => {
-                      this.refs.carousel && this.refs.carousel.scrollToPage(sheetIndex);                  
+                      this.carousel && this.carousel.scrollToPage(sheetIndex);                  
                       onChange && onChange(sheetIndex);
                     });
                   }
@@ -150,7 +150,7 @@ export default class TabView extends Component {
         carousel={false}
         startIndex={this.activeIndex}
         cycle={false}
-        ref='carousel'
+        ref={ref => { this.carousel = ref; }}
         onChange={index => {
           if (typeof index !== 'number') return;
           this.setState({activeIndex: index}, () => onChange && onChange(index));

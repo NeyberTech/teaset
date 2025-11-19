@@ -49,15 +49,15 @@ export default class ListRow extends Component {
   }
 
   measureInWindow(callback) {
-    this.refs.containerView && this.refs.containerView.measureInWindow(callback);
+    this.containerView && this.containerView.measureInWindow(callback);
   }
 
   measure(callback) {
-    this.refs.containerView && this.refs.containerView.measure(callback);
+    this.containerView && this.containerView.measure(callback);
   }
 
   closeSwipeActions() {
-    this.refs.containerView && this.refs.containerView.timingClose();
+    this.containerView && this.containerView.timingClose();
   }
 
   buildStyle() {
@@ -117,7 +117,7 @@ export default class ListRow extends Component {
         {swipeActions.map((item, index) => React.cloneElement(item, {
           key: item.key ? item.key : 'action' + index,
           onPress: () => {
-            this.refs.containerView && this.refs.containerView.timingClose();
+            this.containerView && this.containerView.timingClose();
             item.props.onPress && item.props.onPress();
           }
         }))}
@@ -229,7 +229,7 @@ export default class ListRow extends Component {
           swipeWidth={this.state.swipeWidth}
           onPress={onPress}
           onSwipeStsChange={swipeSts => this.setState({swipeSts})}
-          ref='containerView'
+          ref={ref => { this.containerView = ref; }}
         >
           {this.renderIcon()}
           {this.renderContent()}

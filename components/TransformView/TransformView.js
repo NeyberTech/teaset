@@ -402,12 +402,12 @@ export default class TransformView extends Component {
         {...others}
         style={this.buildStyle()}
         onLayout={e => this.onLayout(e)}
-        ref='view'
+        ref={ref => { this.view = ref; }}
         {...this.panResponder.panHandlers}
       >
         <Animated.View
           style={this.buildContainerStyle()}
-          ref='containerView'
+          ref={ref => { this.containerView = ref; }}
           onLayout={e => {
             this.initContentLayout = e.nativeEvent.layout;
           }}
