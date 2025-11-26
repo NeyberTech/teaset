@@ -20,7 +20,7 @@ export default class Menu extends Overlay {
   static show(fromBounds, items, options = {}) {
     let { hideWhenUnderViewMove, ...rest } = options;
     return super.show(
-      <this.MenuView fromBounds={fromBounds} items={items} {...rest} />, { hideWhenUnderViewMove }
+      <this.MenuView fromBounds={fromBounds} items={items} {...rest} />
     );
   }
 

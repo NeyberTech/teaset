@@ -169,11 +169,10 @@ export default class OverlayView extends Component {
   render() {
     let {autoKeyboardInsets} = this.props;
     return (
-      <View style={styles.screen} pointerEvents={this.overlayPointerEvents}>
+      <View style={styles.screen} pointerEvents="auto" {...this.panResponder.panHandlers}>
         <Animated.View
-          pointerEvents={this.overlayPointerEvents}
+          pointerEvents="box-only"
           style={[styles.screen, {backgroundColor: '#000', opacity: this.state.overlayOpacity}]}
-          {...this.panResponder.panHandlers}
           />
         <View style={this.buildStyle()} pointerEvents='box-none'>
           {this.renderContent()}
