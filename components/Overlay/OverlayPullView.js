@@ -38,19 +38,25 @@ export default class OverlayPullView extends OverlayView {
   constructor(props) {
     super(props);
     this.viewLayout = {x: 0, y: 0, width: 0, height: 0};
+    this._inited = false;
     Object.assign(this.state, {
-      marginValue: new Animated.Value(0),
-      showed: false,
+      translateValue: new Animated.Value(0),
+      opacityValue: new Animated.Value(0),
     });
   }
 
   get appearAnimates() {
     let animates = super.appearAnimates;
     animates.push(
-      Animated.spring(this.state.marginValue, {
+      Animated.spring(this.state.translateValue, {
         toValue: 0,
         friction: 9,
-        useNativeDriver: false,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.state.opacityValue, {
+        toValue: 1,
+        duration: 150,
+        useNativeDriver: true,
       })
     );
     return animates;
@@ -59,10 +65,15 @@ export default class OverlayPullView extends OverlayView {
   get disappearAnimates() {
     let animates = super.disappearAnimates;
     animates.push(
-      Animated.spring(this.state.marginValue, {
-        toValue: this.marginSize,
+      Animated.spring(this.state.translateValue, {
+        toValue: this._initTranslateValue || 0,
         friction: 9,
-        useNativeDriver: false,
+        useNativeDriver: true,
+      }),
+      Animated.timing(this.state.opacityValue, {
+        toValue: 0,
+        duration: 120,
+        useNativeDriver: true,
       })
     );
     return animates;
@@ -70,12 +81,6 @@ export default class OverlayPullView extends OverlayView {
 
   get appearAfterMount() {
     return false;
-  }
-
-  get marginSize() {
-    let {side} = this.props;
-    if (side === 'left' || side === 'right') return -this.viewLayout.width;
-    else return -this.viewLayout.height;
   }
 
   get rootTransformValue() {
@@ -101,9 +106,6 @@ export default class OverlayPullView extends OverlayView {
   }
 
   appear(animated = this.props.animated) {
-    if (animated) {
-      this.state.marginValue.setValue(this.marginSize);
-    }
     super.appear(animated);
 
     let {rootTransform} = this.props;
@@ -122,10 +124,25 @@ export default class OverlayPullView extends OverlayView {
   }
 
   onLayout(e) {
-    this.viewLayout = e.nativeEvent.layout;
-    if (!this.state.showed) {
-      this.setState({showed: true});
-      this.appear();
+    const {side} = this.props;
+    const {width, height} = e.nativeEvent.layout;
+    this.viewLayout = {width, height};
+
+    if (!this._inited) {
+      this._inited = true;
+
+      let initValue =
+        side === 'left' || side === 'right' ? width : height;
+
+      if (side === 'top' || side === 'left') {
+        initValue = -initValue;
+      }
+
+      this._initTranslateValue = initValue;
+      this.state.translateValue.setValue(initValue);
+      this.state.opacityValue.setValue(0);
+
+      this.appear(true);
     }
   }
 
@@ -155,18 +172,27 @@ export default class OverlayPullView extends OverlayView {
     let contentStyle;
     switch (side) {
       case 'top':
-        contentStyle = {marginTop: this.state.marginValue};
+        contentStyle = {
+          transform: [{ translateY: this.state.translateValue }],
+        };
         break;
       case 'left':
-        contentStyle = {marginLeft: this.state.marginValue};
+        contentStyle = {
+          transform: [{ translateX: this.state.translateValue }],
+        };
         break;
       case 'right':
-        contentStyle = {marginRight: this.state.marginValue};
+        contentStyle = {
+          transform: [{ translateX: this.state.translateValue }],
+        };
         break;
       default:
-        contentStyle = {marginBottom: this.state.marginValue};
+        contentStyle = {
+          transform: [{ translateY: this.state.translateValue }],
+        };
     }
-    contentStyle.opacity = this.state.showed ? 1 : 0;
+
+    contentStyle.opacity = this.state.opacityValue;
     containerStyle = [{
       backgroundColor: Theme.defaultColor,
     }].concat(containerStyle).concat(contentStyle);
