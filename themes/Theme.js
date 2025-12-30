@@ -139,14 +139,13 @@ const Theme = {
   },
 
   get statusBarHeight() {
-    if (Platform.OS === 'web') {
-      return 0;
-    }
-    else if (Platform.OS === 'ios') {
+    if (Platform.OS === 'ios' || this.isIOSWebInAPP) {
       if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? (this.isDynamicIslandIPhone ? 54 : 44) : 20);
       if (this.isPad) return 20;
     } else if (Platform.OS === 'android') {
       if (Platform.Version > 20) return StatusBar.currentHeight; //translucent StatusBar is required
+      return 0;
+    } else if (Platform.OS === 'web') {
       return 0;
     }
     return this.isLandscape ? 0 : 20;
