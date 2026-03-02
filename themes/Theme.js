@@ -143,7 +143,10 @@ const Theme = {
       if (this.isIPhoneX) return this.isLandscape ? 0 : (this.fitIPhoneX ? (this.isDynamicIslandIPhone ? 54 : 44) : 20);
       if (this.isPad) return 20;
     } else if (Platform.OS === 'android') {
-      if (Platform.Version > 20) return StatusBar.currentHeight; //translucent StatusBar is required
+      if (Platform.Version > 20) {
+        if (this.isLandscape) return 0;
+        return StatusBar.currentHeight || 24; //translucent StatusBar is required
+      }
       return 0;
     } else if (Platform.OS === 'web') {
       return 0;
