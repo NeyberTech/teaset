@@ -30,6 +30,8 @@ const IPHONE16PRO_WIDTH = 402;
 const IPHONE16PRO_HEIGHT = 874;
 const IPHONE16PROMAX_WIDTH = 440;
 const IPHONE16PROMAX_HEIGHT = 956;
+const IPHONE_AIR_WIDTH = 420;
+const IPHONE_AIR_HEIGHT = 912;
 
 let {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
 
@@ -71,6 +73,10 @@ const isDynamicIslandIPhone = (() => {
       (
         (D_HEIGHT === IPHONE16PROMAX_HEIGHT && D_WIDTH === IPHONE16PROMAX_WIDTH) ||
         (D_HEIGHT === IPHONE16PROMAX_WIDTH && D_WIDTH === IPHONE16PROMAX_HEIGHT)
+      ) ||
+      (
+        (D_HEIGHT === IPHONE_AIR_HEIGHT && D_WIDTH === IPHONE_AIR_WIDTH) ||
+        (D_HEIGHT === IPHONE_AIR_WIDTH && D_WIDTH === IPHONE_AIR_HEIGHT)
       )
     )
   );
