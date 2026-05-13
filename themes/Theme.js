@@ -32,6 +32,16 @@ const IPHONE16PROMAX_WIDTH = 440;
 const IPHONE16PROMAX_HEIGHT = 956;
 const IPHONE_AIR_WIDTH = 420;
 const IPHONE_AIR_HEIGHT = 912;
+// Display Zoom dimensions overlap between notch and Dynamic Island devices, so
+// they can only be used to detect full-screen iPhones, not the exact cutout type.
+// Common full-screen iPhone Display Zoom sizes:
+// - 320x693: 5.4", 6.1", and 6.3" full-screen iPhones
+// - 375x812: 6.5", 6.7", and 6.9" full-screen iPhones, and iPhone Air
+// Non-full-screen zoomed sizes like 320x568 and 375x667 are intentionally excluded.
+const IPHONE_ZOOMED_COMPACT_WIDTH = 320;
+const IPHONE_ZOOMED_COMPACT_HEIGHT = 693;
+const IPHONE_ZOOMED_LARGE_WIDTH = 375;
+const IPHONE_ZOOMED_LARGE_HEIGHT = 812;
 
 let {width: D_WIDTH, height: D_HEIGHT} = Dimensions.get('window');
 
@@ -93,6 +103,10 @@ const isIPhoneX = (() => {
         (D_HEIGHT === IPHONE12_WIDTH && D_WIDTH === IPHONE12_HEIGHT)) ||
       ((D_HEIGHT === IPHONE12PROMAX_HEIGHT && D_WIDTH === IPHONE12PROMAX_WIDTH) ||
         (D_HEIGHT === IPHONE12PROMAX_WIDTH && D_WIDTH === IPHONE12PROMAX_HEIGHT)) ||
+      ((D_HEIGHT === IPHONE_ZOOMED_COMPACT_HEIGHT && D_WIDTH === IPHONE_ZOOMED_COMPACT_WIDTH) ||
+        (D_HEIGHT === IPHONE_ZOOMED_COMPACT_WIDTH && D_WIDTH === IPHONE_ZOOMED_COMPACT_HEIGHT)) ||
+      ((D_HEIGHT === IPHONE_ZOOMED_LARGE_HEIGHT && D_WIDTH === IPHONE_ZOOMED_LARGE_WIDTH) ||
+        (D_HEIGHT === IPHONE_ZOOMED_LARGE_WIDTH && D_WIDTH === IPHONE_ZOOMED_LARGE_HEIGHT)) ||
       isDynamicIslandIPhone
     )
   );
