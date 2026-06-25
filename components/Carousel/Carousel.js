@@ -142,9 +142,9 @@ export default class Carousel extends Component {
     else if (cardIndex >= this.cardCount) cardIndex = this.cardCount - 1;
     if (this.refs.scrollView) {
       if (this.props.horizontal) {
-        // For RTL android scroll direction reverse
+        // For RTL scroll direction reverse
         let _cardIndex = cardIndex;
-        if (I18nManager.isRTL && Platform.OS == 'android') {
+        if (I18nManager.isRTL) {
           _cardIndex = this.pageCount - cardIndex - 1;
         }
         this.refs.scrollView.scrollTo({x: width * _cardIndex, y: 0, animated: animated});
