@@ -16,6 +16,7 @@ export default class OverlayPullView extends OverlayView {
   static propTypes = {
     ...OverlayView.propTypes,
     side: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
+    animationSide: PropTypes.oneOf(['top', 'bottom', 'left', 'right']),
     containerStyle: ViewPropTypes.style,
     rootTransform: PropTypes.oneOfType([
       PropTypes.oneOf(['none', 'translate', 'scale']),
@@ -124,17 +125,18 @@ export default class OverlayPullView extends OverlayView {
   }
 
   onLayout(e) {
-    const {side} = this.props;
+    const {side, animationSide} = this.props;
     const {width, height} = e.nativeEvent.layout;
     this.viewLayout = {width, height};
 
     if (!this._inited) {
       this._inited = true;
 
+      const initSide = animationSide || side;
       let initValue =
-        side === 'left' || side === 'right' ? width : height;
+        initSide === 'left' || initSide === 'right' ? width : height;
 
-      if (side === 'top' || side === 'left') {
+      if (initSide === 'top' || initSide === 'left') {
         initValue = -initValue;
       }
 
