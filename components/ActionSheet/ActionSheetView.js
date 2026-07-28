@@ -74,18 +74,7 @@ export default class ActionSheetView extends Overlay.PullView {
           />
       );
     }
-    list.push(
-      <View
-        style={{
-          backgroundColor: cancelItem ? Theme.asCancelItemColor : Theme.asItemColor,
-          height: Theme.screenInset.bottom
-        }}
-        key={'bottomSpace'}
-        />
-    );
-
     return super.renderContent(list);
   }
 
 }
-

@@ -6,6 +6,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, View } from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 
 import Theme from 'teaset/themes/Theme';
@@ -15,6 +16,7 @@ import Projector from '../Projector/Projector';
 import Carousel from '../Carousel/Carousel';
 
 export default class TabView extends Component {
+  static contextType = SafeAreaInsetsContext;
 
   static propTypes = {
     ...ViewPropTypes,
@@ -67,7 +69,7 @@ export default class TabView extends Component {
   renderBar() {
     //Overflow is not supported on Android, then use a higher container view to support "big icon button"
     let {barStyle, onChange} = this.props;
-    let {bottom: bottomInset} = Theme.screenInset;
+    let {bottom: bottomInset} = this.context;
 
     barStyle = [{
       backgroundColor: Theme.tvBarColor,

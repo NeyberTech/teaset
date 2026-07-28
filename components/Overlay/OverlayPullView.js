@@ -6,6 +6,7 @@ import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import { Animated, View } from 'react-native';
 import {ViewPropTypes} from 'deprecated-react-native-prop-types';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 import Theme from '../../themes/Theme';
 import TopView from './TopView';
@@ -200,9 +201,42 @@ export default class OverlayPullView extends OverlayView {
     }].concat(containerStyle).concat(contentStyle);
 
     return (
-      <Animated.View style={containerStyle} onLayout={(e) => this.onLayout(e)}>
-        {content ? content : children}
-      </Animated.View>
+      <SafeAreaInsetsContext.Consumer>
+        {insets => {
+          let safeAreaStyle;
+          const isSideDrawer = side === 'left' || side === 'right';
+          switch (side) {
+            case 'top':
+              safeAreaStyle = {paddingTop: insets.top, paddingLeft: insets.left, paddingRight: insets.right};
+              break;
+            case 'left':
+              safeAreaStyle = {paddingTop: insets.top, paddingBottom: insets.bottom, paddingLeft: insets.left};
+              break;
+            case 'right':
+              safeAreaStyle = {paddingTop: insets.top, paddingRight: insets.right, paddingBottom: insets.bottom};
+              break;
+            default:
+              safeAreaStyle = {paddingRight: insets.right, paddingBottom: insets.bottom, paddingLeft: insets.left};
+          }
+          if (isSideDrawer) {
+            return (
+              <Animated.View
+                style={containerStyle.concat({height: '100%'})}
+                onLayout={(e) => this.onLayout(e)}
+              >
+                <View style={[{flex: 1}, safeAreaStyle]}>
+                  {content ? content : children}
+                </View>
+              </Animated.View>
+            );
+          }
+          return (
+            <Animated.View style={containerStyle.concat(safeAreaStyle)} onLayout={(e) => this.onLayout(e)}>
+              {content ? content : children}
+            </Animated.View>
+          );
+        }}
+      </SafeAreaInsetsContext.Consumer>
     );
   }
 

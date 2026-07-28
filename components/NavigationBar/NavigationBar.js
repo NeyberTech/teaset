@@ -35,6 +35,12 @@ export default class NavigationBar extends Component {
     statusBarColor: PropTypes.string, //status bar color, default: style.backgroundColor
     statusBarHidden: PropTypes.bool, //status bar hidden
     statusBarInsets: PropTypes.bool, //auto add space for iOS status bar
+    safeAreaInsets: PropTypes.shape({
+      top: PropTypes.number,
+      right: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+    }),
   };
 
   static defaultProps = {
@@ -57,9 +63,14 @@ export default class NavigationBar extends Component {
     this.state = {
       leftViewWidth: 0,
       rightViewWidth: 0,
-      barTop: new Animated.Value(props.hidden ? -(Theme.navBarContentHeight + Theme.statusBarHeight) : 0),
+      barTop: new Animated.Value(props.hidden ? -(Theme.navBarContentHeight + this.getTopInset(props)) : 0),
       barOpacity: new Animated.Value(props.hidden ? 0 : 1),
     };
+  }
+
+  getTopInset(props = this.props) {
+    if (!props.statusBarInsets) return 0;
+    return props.safeAreaInsets ? props.safeAreaInsets.top : 0;
   }
 
   componentDidUpdate(prevProps) {
@@ -69,21 +80,22 @@ export default class NavigationBar extends Component {
   }
 
   buildStyle() {
-    let {style, type, statusBarInsets} = this.props;
+    let {style, type, statusBarInsets, safeAreaInsets} = this.props;
 
     let justifyContent;
     switch (type === 'auto' ? Platform.OS : type) {
       case 'ios': justifyContent = 'space-between'; break;
       case 'android': justifyContent = 'flex-end'; break;
     }
-    let {left: leftInset, right: rightInset} = Theme.screenInset;
+    let {left: leftInset, right: rightInset} = safeAreaInsets || {left: 0, right: 0};
+    let topInset = this.getTopInset();
     style = [{
       backgroundColor: Theme.navColor,
       position: 'absolute',
       left: 0,
       right: 0,
-      height: Theme.navBarContentHeight + (statusBarInsets ? Theme.statusBarHeight : 0),
-      paddingTop: statusBarInsets ? Theme.statusBarHeight : 0,
+      height: Theme.navBarContentHeight + topInset,
+      paddingTop: topInset,
       paddingLeft: 4 + leftInset,
       paddingRight: 4 + rightInset,
       borderBottomWidth: Theme.navSeparatorLineWidth,
@@ -172,7 +184,7 @@ export default class NavigationBar extends Component {
   }
 
   renderTitle(fs) {
-    let {type, title, titleStyle, statusBarInsets} = this.props;
+    let {type, title, titleStyle} = this.props;
     let {leftViewWidth, rightViewWidth} = this.state;
     let titleFs = StyleSheet.flatten(titleStyle)
 
@@ -199,7 +211,7 @@ export default class NavigationBar extends Component {
     let titleViewStyle = {
       backgroundColor: 'rgba(0, 0, 0, 0)',
       position: 'absolute',
-      top: statusBarInsets ? Theme.statusBarHeight : 0,
+      top: this.getTopInset(),
       left: 0,
       right: 0,
       height: Theme.navBarContentHeight,
@@ -237,7 +249,7 @@ export default class NavigationBar extends Component {
   }
 
   render() {
-    let {style, children, type, title, titleStyle, leftView, rightView, tintColor, background, hidden, animated, statusBarStyle, statusBarColor, statusBarHidden, statusBarInsets, onLayout, ...others} = this.props;
+    let {style, children, type, title, titleStyle, leftView, rightView, tintColor, background, hidden, animated, statusBarStyle, statusBarColor, statusBarHidden, statusBarInsets, safeAreaInsets, onLayout, ...others} = this.props;
     let fs = StyleSheet.flatten(this.buildStyle());
     return (
       <NavigationBarContext.Provider value={{ tintColor: tintColor === undefined ? Theme.navTintColor : tintColor }}>

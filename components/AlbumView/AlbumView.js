@@ -7,12 +7,14 @@ import PropTypes from 'prop-types';
 import {StyleSheet, View, Image, Animated} from 'react-native';
 import resolveAssetSource from 'react-native/Libraries/Image/resolveAssetSource';
 import {ImagePropTypes, ViewPropTypes} from 'deprecated-react-native-prop-types';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 import Theme from 'teaset/themes/Theme';
 import AlbumSheet from './AlbumSheet';
 import CarouselControl from '../Carousel/CarouselControl';
 
 export default class AlbumView extends Component {
+  static contextType = SafeAreaInsetsContext;
 
   static propTypes = {
     ...ViewPropTypes,
@@ -198,7 +200,7 @@ export default class AlbumView extends Component {
     if (React.isValidElement(control)) {
       control = React.cloneElement(control, {index: this.state.index, total: images.length, carousel: this});
     } else if (control) {
-      control = <this.constructor.Control style={{paddingBottom: Theme.screenInset.bottom}} index={this.state.index} total={images.length} carousel={this} />
+      control = <this.constructor.Control style={{paddingBottom: this.context.bottom}} index={this.state.index} total={images.length} carousel={this} />
     }
 
     return (

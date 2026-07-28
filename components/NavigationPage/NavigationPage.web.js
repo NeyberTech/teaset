@@ -5,6 +5,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Platform, View, Dimensions} from 'react-native';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 import Theme from 'teaset/themes/Theme';
 // import TeaNavigator from '../TeaNavigator/TeaNavigator';
@@ -13,6 +14,7 @@ import NavigationBar from '../NavigationBar/NavigationBar';
 import KeyboardSpace from '../KeyboardSpace/KeyboardSpace';
 
 export default class NavigationPage extends BasePage {
+  static contextType = SafeAreaInsetsContext;
 
   static propTypes = {
     ...BasePage.propTypes,
@@ -64,6 +66,8 @@ export default class NavigationPage extends BasePage {
   renderNavigationBar() {
     return (
       <NavigationBar
+        style={{position: 'relative'}}
+        safeAreaInsets={this.context}
         title={this.renderNavigationTitle()}
         leftView={this.renderNavigationLeftView()}
         rightView={this.renderNavigationRightView()}
@@ -78,21 +82,17 @@ export default class NavigationPage extends BasePage {
   render() {
     let {style, children, scene, autoKeyboardInsets, keyboardTopInsets, title, showBackButton, navigationBarInsets, ...others} = this.props;
 
-    let {left: paddingLeft, right: paddingRight} = Theme.screenInset;
     let pageContainerStyle = [{
       flex: 1,
-      paddingLeft,
-      paddingRight,
-      marginTop: navigationBarInsets ? (Theme.navBarContentHeight + Theme.statusBarHeight) : 0,
     }];
 
     return (
       <View style={this.buildStyle()} onLayout={e => this.onLayout(e)} {...others}>
         <View style={{flex: 1}} >
+          {this.renderNavigationBar()}
           <View style={pageContainerStyle}>
             {this.renderPage()}
           </View>
-          {this.renderNavigationBar()}
         </View>
         {autoKeyboardInsets ? <KeyboardSpace topInsets={keyboardTopInsets} /> : null}
       </View>
@@ -101,5 +101,4 @@ export default class NavigationPage extends BasePage {
 
 
 }
-
 
