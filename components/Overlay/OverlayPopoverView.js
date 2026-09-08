@@ -5,11 +5,14 @@
 import React, {Component} from "react";
 import PropTypes from 'prop-types';
 import {View, Dimensions, Platform, StatusBar} from 'react-native';
+import {SafeAreaInsetsContext} from 'react-native-safe-area-context';
 
 import OverlayView from './OverlayView';
 import Popover from '../Popover/Popover';
 
 export default class OverlayPopoverView extends OverlayView {
+
+  static contextType = SafeAreaInsetsContext;
 
   static propTypes = {
     ...OverlayView.propTypes,
@@ -89,6 +92,11 @@ export default class OverlayPopoverView extends OverlayView {
 
     let screenWidth = Dimensions.get('window').width;
     let screenHeight = Dimensions.get('window').height;
+    let {top = 0, right = 0, bottom = 0, left = 0} = this.context || {};
+    let safeTop = top;
+    let safeRight = screenWidth - right;
+    let safeBottom = screenHeight - bottom;
+    let safeLeft = left;
     let {x, y, width, height} = fromBounds ? fromBounds : {};
 
     if (!x && x !== 0) x = screenWidth / 2;
@@ -103,16 +111,16 @@ export default class OverlayPopoverView extends OverlayView {
     let pw = popoverWidth + directionInsets;
     switch (direction) {
       case 'right':
-        if (autoDirection && x + width + pw > screenWidth && x >= pw) direction = 'left';
+        if (autoDirection && x + width + pw > safeRight && x - pw >= safeLeft) direction = 'left';
         break;
       case 'left':
-        if (autoDirection && x + width + pw <= screenWidth && x < pw) direction = 'right';
+        if (autoDirection && x + width + pw <= safeRight && x - pw < safeLeft) direction = 'right';
         break;
       case 'up':
-        if (autoDirection && y + height + ph <= screenHeight && y < ph) direction = 'down';
+        if (autoDirection && y + height + ph <= safeBottom && y - ph < safeTop) direction = 'down';
         break;
       default:
-        if (autoDirection && y + height + ph > screenHeight && y >= ph) direction = 'up';
+        if (autoDirection && y + height + ph > safeBottom && y - ph >= safeTop) direction = 'up';
         break;
     }
 
